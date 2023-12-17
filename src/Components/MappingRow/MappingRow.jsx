@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import MappingColumn from "../MappingColumn/MappingColumn";
+import AddButtons from "../AddButtons/AddButtons";
 
-export default function MappingRow({ map }) {
+export default function MappingRow({ map, addToLayout, removeFromLayout }) {
   const [drag, setDrag] = useState({
     active: false,
     y: "",
@@ -38,25 +40,58 @@ export default function MappingRow({ map }) {
   };
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col relative">
+      {drag.active && (
+        <div
+          onMouseMove={resizeFrame}
+          onMouseUp={stopResize}
+          className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
+        ></div>
+      )}
       <div
-        className="bg-slate-600 flex mb-auto w-full"
+        className="bg-slate-600 flex mb-auto w-full relative"
         style={boxStyle}
       >
-        { drag.active && <div onMouseMove={resizeFrame} onMouseUp={stopResize} 
-            className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"></div>
-        }
         <button
-          className="mt-auto w-full h-[10px] border-solid border-white border-b-2"
+          className="w-full h-[10px] border-solid border-white border-b-2 absolute bottom-0"
           onMouseDown={startResize}
         >
           {}
         </button>
+        <div className="w-full h-full flex flex-wrap pl-1 py-2 gap-2">
+          <div className="w-[200px] h-full bg-purple-500 rounded-[20px]"></div>
+          <div className="w-[150px] h-full bg-sky-500 rounded-[20px]"></div>
+          <div className="w-[300px] h-full bg-emerald-500 rounded-[20px]"></div>
+        </div>
+        <button
+          onClick={() => removeFromLayout(map.id)}
+          className="text-gray-100 h-full ml-auto bg-red-400"
+        >
+          <p className="-rotate-90 m-0">remove</p>
+        </button>
       </div>
-      <div className="flex w-full h-full">{ 
-        map?.next?.type === 'row' ? <MappingRow map={map.next} /> : 
-            map?.next?.type === 'column' && <MappingColumn map={map.next} />
-        }</div> 
+      <div className="flex w-full h-full relative">
+        {!map.next && (
+          <div className="absolute top-0 right-0 m-[2px]">
+            <AddButtons addToLayout={addToLayout} />
+          </div>
+        )}
+        {map?.next?.type === "row" ? (
+          <MappingRow
+            map={map.next}
+            addToLayout={addToLayout}
+            removeFromLayout={removeFromLayout}
+          />
+        ) : (
+          map?.next?.type === "column" && (
+            <MappingColumn
+              map={map.next}
+              addToLayout={addToLayout}
+              removeFromLayout={removeFromLayout}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 }
