@@ -9,6 +9,7 @@ export default function MappingColumn({
   addToLayout,
   removeFromLayout,
   addWidget,
+  removeWidget
 }) {
   const [drag, setDrag] = useState({
     active: false,
@@ -67,7 +68,7 @@ export default function MappingColumn({
         <div className="w-full h-full flex flex-col pt-1 px-2 gap-2 overflow-y-auto overflow-x-hidden">
           {/* Here goes content */}
           {map.insideContent.map((elem, index) =>
-            createElement(widgets[elem], { key: index, direction: map.type })
+            createElement(widgets[elem.type], { key: index, direction: map.type, onClose: () => removeWidget(map.id, elem.id) })
           )}
         </div>
         {/* Este bloque de botones no tiene ningun sentido y solo sirve para mostrar que puedo cargar Widgets programaticamente */}
@@ -105,6 +106,7 @@ export default function MappingColumn({
             addToLayout={addToLayout}
             removeFromLayout={removeFromLayout}
             addWidget={addWidget}
+            removeWidget={removeWidget}
           />
         ) : (
           map?.next?.type === "column" && (
@@ -113,6 +115,7 @@ export default function MappingColumn({
               addToLayout={addToLayout}
               removeFromLayout={removeFromLayout}
               addWidget={addWidget}
+              removeWidget={removeWidget}
             />
           )
         )}

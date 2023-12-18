@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-export default function Green({ direction }) {
+export default function Green({ direction, onClose }) {
   const styles = {
     width: direction === "column" ? "100%" : "250px",
     height: direction === "column" ? "250px" : "100%",
@@ -7,9 +7,16 @@ export default function Green({ direction }) {
   return (
     <div
       style={styles}
-      className="bg-emerald-500 rounded-[20px] flex flex-shrink-0"
+      className="bg-emerald-500 rounded-[20px] flex flex-col flex-shrink-0"
     >
       <p className="m-auto">Green Content</p>
+      <button 
+      type="button" 
+      onClick={onClose} 
+      className="m-auto p-2 bg-gray-400 border-[1px] border-solid border-gray-700"
+      >
+        Close
+      </button>
     </div>
   );
 }

@@ -8,6 +8,7 @@ export default function MappingLayout({
   addToLayout,
   removeFromLayout,
   addWidget,
+  removeWidget
 }) {
   return (
     <div className="bg-yellow-200 h-[90dvh] w-[90%] flex relative">
@@ -22,6 +23,7 @@ export default function MappingLayout({
           addToLayout={addToLayout}
           removeFromLayout={removeFromLayout}
           addWidget={addWidget}
+          removeWidget={removeWidget}
         />
       ) : (
         map?.next?.type === "column" && (
@@ -30,6 +32,7 @@ export default function MappingLayout({
             addToLayout={addToLayout}
             removeFromLayout={removeFromLayout}
             addWidget={addWidget}
+            removeWidget={removeWidget}
           />
         )
       )}

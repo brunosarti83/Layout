@@ -7,7 +7,7 @@ export const widgets = {
 }
 
 export const createNewNode = (type) => {
-    const id = Math.random() * 1000000
+    const id = String(Math.floor(Math.random()*10000))
     return {
         id,
         type,
