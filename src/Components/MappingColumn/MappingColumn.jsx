@@ -34,7 +34,7 @@ export default function MappingColumn({
     const { active, x } = drag;
     if (active) {
       const xDiff = Math.abs(x - e.clientX);
-      const newW = x < e.clientX ? dims.w - xDiff : dims.w + xDiff;
+      const newW = x < e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff;
 
       setDrag({ ...drag, x: e.clientX });
       setDims({ w: newW });

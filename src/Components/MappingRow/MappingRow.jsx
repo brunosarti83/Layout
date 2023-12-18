@@ -34,7 +34,7 @@ export default function MappingRow({
     const { active, y } = drag;
     if (active) {
       const yDiff = Math.abs(y - e.clientY);
-      const newH = y < e.clientY ? dims.h + yDiff : dims.h - yDiff;
+      const newH = y < e.clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 150);
 
       setDrag({ ...drag, y: e.clientY });
       setDims({ h: newH });
