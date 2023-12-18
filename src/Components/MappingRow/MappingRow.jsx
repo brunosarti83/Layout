@@ -1,9 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, createElement } from "react";
 import MappingColumn from "../MappingColumn/MappingColumn";
 import AddButtons from "../AddButtons/AddButtons";
+import { widgets } from "../../layout";
 
-export default function MappingRow({ map, addToLayout, removeFromLayout }) {
+export default function MappingRow({
+  map,
+  addToLayout,
+  removeFromLayout,
+  addWidget,
+}) {
   const [drag, setDrag] = useState({
     active: false,
     y: "",
@@ -58,11 +64,28 @@ export default function MappingRow({ map, addToLayout, removeFromLayout }) {
         >
           {}
         </button>
-        <div className="w-full h-full flex flex-wrap pl-1 py-2 gap-2">
-          <div className="w-[200px] h-full bg-purple-500 rounded-[20px]"></div>
-          <div className="w-[150px] h-full bg-sky-500 rounded-[20px]"></div>
-          <div className="w-[300px] h-full bg-emerald-500 rounded-[20px]"></div>
+        <div className="w-full h-full flex pl-1 py-2 gap-2 overflow-x-auto overflow-y-hidden">
+          {/* Here goes content */}
+          {map.insideContent.map((elem, index) =>
+            createElement(widgets[elem], { key: index, direction: map.type })
+          )}
         </div>
+        {/* Este bloque de botones no tiene ningun sentido y solo sirve para mostrar que puedo cargar Widgets programaticamente */}
+        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <button
+            onClick={() => addWidget(map.id, "purple")}
+            className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
+          >
+            Purple
+          </button>
+          <button
+            onClick={() => addWidget(map.id, "green")}
+            className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
+          >
+            Green
+          </button>
+        </div>
+        {/* ... */}
         <button
           onClick={() => removeFromLayout(map.id)}
           className="text-gray-100 h-full ml-auto bg-red-400"

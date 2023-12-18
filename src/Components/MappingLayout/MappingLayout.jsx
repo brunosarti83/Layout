@@ -3,9 +3,14 @@ import AddButtons from "../AddButtons/AddButtons";
 import MappingColumn from "../MappingColumn/MappingColumn";
 import MappingRow from "../MappingRow/MappingRow";
 
-export default function MappingLayout({ map, addToLayout, removeFromLayout }) {
+export default function MappingLayout({
+  map,
+  addToLayout,
+  removeFromLayout,
+  addWidget,
+}) {
   return (
-    <div className="bg-yellow-200 h-[90%] w-[90%] flex relative">
+    <div className="bg-yellow-200 h-[90dvh] w-[90%] flex relative">
       {!map.next && (
         <div className="absolute top-0 right-0 m-[2px]">
           <AddButtons addToLayout={addToLayout} />
@@ -16,6 +21,7 @@ export default function MappingLayout({ map, addToLayout, removeFromLayout }) {
           map={map.next}
           addToLayout={addToLayout}
           removeFromLayout={removeFromLayout}
+          addWidget={addWidget}
         />
       ) : (
         map?.next?.type === "column" && (
@@ -23,6 +29,7 @@ export default function MappingLayout({ map, addToLayout, removeFromLayout }) {
             map={map.next}
             addToLayout={addToLayout}
             removeFromLayout={removeFromLayout}
+            addWidget={addWidget}
           />
         )
       )}

@@ -1,9 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, createElement } from "react";
 import MappingRow from "../MappingRow/MappingRow";
 import AddButtons from "../AddButtons/AddButtons";
+import { widgets } from "../../layout";
 
-export default function MappingColumn({ map, addToLayout, removeFromLayout }) {
+export default function MappingColumn({
+  map,
+  addToLayout,
+  removeFromLayout,
+  addWidget,
+}) {
   const [drag, setDrag] = useState({
     active: false,
     x: "",
@@ -58,13 +64,28 @@ export default function MappingColumn({ map, addToLayout, removeFromLayout }) {
         >
           {}
         </button>
-        <div className="w-full h-full flex flex-col flex-wrap pt-1 px-2 gap-2">
-          <div className="w-full h-[200px] bg-purple-500 rounded-[20px]"></div>
-          <div className="w-full h-[200px] bg-purple-500 rounded-[20px]"></div>
-          <div className="w-full h-[200px] bg-purple-500 rounded-[20px]"></div>
-          <div className="w-full h-[100px] bg-sky-500 rounded-[20px]"></div>
-          <div className="w-full h-[150px] bg-emerald-500 rounded-[20px]"></div>
+        <div className="w-full h-full flex flex-col pt-1 px-2 gap-2 overflow-y-auto overflow-x-hidden">
+          {/* Here goes content */}
+          {map.insideContent.map((elem, index) =>
+            createElement(widgets[elem], { key: index, direction: map.type })
+          )}
         </div>
+        {/* Este bloque de botones no tiene ningun sentido y solo sirve para mostrar que puedo cargar Widgets programaticamente */}
+        <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <button
+            onClick={() => addWidget(map.id, "purple")}
+            className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
+          >
+            Purple
+          </button>
+          <button
+            onClick={() => addWidget(map.id, "green")}
+            className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
+          >
+            Green
+          </button>
+        </div>
+        {/* ... */}
         <button
           onClick={() => removeFromLayout(map.id)}
           className="text-gray-100 w-full mt-auto bg-red-400 ml-auto"
@@ -83,6 +104,7 @@ export default function MappingColumn({ map, addToLayout, removeFromLayout }) {
             map={map.next}
             addToLayout={addToLayout}
             removeFromLayout={removeFromLayout}
+            addWidget={addWidget}
           />
         ) : (
           map?.next?.type === "column" && (
@@ -90,6 +112,7 @@ export default function MappingColumn({ map, addToLayout, removeFromLayout }) {
               map={map.next}
               addToLayout={addToLayout}
               removeFromLayout={removeFromLayout}
+              addWidget={addWidget}
             />
           )
         )}
