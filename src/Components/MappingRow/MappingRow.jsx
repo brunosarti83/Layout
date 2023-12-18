@@ -93,7 +93,7 @@ export default function MappingRow({
           <p className="-rotate-90 m-0">remove</p>
         </button>
       </div>
-      <div className="flex w-full h-full relative">
+      <div className="flex w-full h-full relative overflow-y-hidden">
         {!map.next && (
           <div className="absolute top-0 right-0 m-[2px]">
             <AddButtons addToLayout={addToLayout} />
@@ -104,6 +104,7 @@ export default function MappingRow({
             map={map.next}
             addToLayout={addToLayout}
             removeFromLayout={removeFromLayout}
+            addWidget={addWidget}
           />
         ) : (
           map?.next?.type === "column" && (
@@ -111,6 +112,7 @@ export default function MappingRow({
               map={map.next}
               addToLayout={addToLayout}
               removeFromLayout={removeFromLayout}
+              addWidget={addWidget}
             />
           )
         )}

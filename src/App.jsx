@@ -6,12 +6,7 @@ import MappingLayout from "./Components/MappingLayout/MappingLayout";
 function App() {
   const layout = {
     outsideContent: [],
-    next: {
-      id: 123456,
-      type: "column",
-      insideContent: [],
-      next: null,
-    },
+    next: null
   };
 
   const [map, setMap] = useState(layout);

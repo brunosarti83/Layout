@@ -93,7 +93,7 @@ export default function MappingColumn({
           remove
         </button>
       </div>
-      <div className="flex w-full h-full relative">
+      <div className="flex w-full h-full relative overflow-x-hidden">
         {!map.next && (
           <div className="absolute top-0 right-0 m-[2px]">
             <AddButtons addToLayout={addToLayout} />
