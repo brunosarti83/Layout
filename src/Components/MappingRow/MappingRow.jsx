@@ -1,16 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState, createElement } from "react";
+import { useDispatch } from "react-redux";
+import { removeFromLayout, addWidget, removeWidget } from "../../redux/actions";
 import MappingColumn from "../MappingColumn/MappingColumn";
 import AddButtons from "../AddButtons/AddButtons";
 import { widgets } from "../../layout";
 
-export default function MappingRow({
-  map,
-  addToLayout,
-  removeFromLayout,
-  addWidget,
-  removeWidget
-}) {
+export default function MappingRow({ map }) {
+  const dispatch = useDispatch();
+
   const [drag, setDrag] = useState({
     active: false,
     y: "",
@@ -35,7 +33,8 @@ export default function MappingRow({
     const { active, y } = drag;
     if (active) {
       const yDiff = Math.abs(y - e.clientY);
-      const newH = y < e.clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 150);
+      const newH =
+        y < e.clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 150);
 
       setDrag({ ...drag, y: e.clientY });
       setDims({ h: newH });
@@ -68,19 +67,23 @@ export default function MappingRow({
         <div className="w-full h-full flex pl-1 py-2 gap-2 overflow-x-auto overflow-y-hidden">
           {/* Here goes content */}
           {map.insideContent.map((elem, index) =>
-            createElement(widgets[elem.type], { key: index, direction: map.type, onClose: () => removeWidget(map.id, elem.id) })
+            createElement(widgets[elem.type], {
+              key: index,
+              direction: map.type,
+              onClose: () => dispatch(removeWidget(map.id, elem.id)),
+            })
           )}
         </div>
         {/* Este bloque de botones no tiene ningun sentido y solo sirve para mostrar que puedo cargar Widgets programaticamente */}
         <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
           <button
-            onClick={() => addWidget(map.id, "purple")}
+            onClick={() => dispatch(addWidget(map.id, "purple"))}
             className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
           >
             Purple
           </button>
           <button
-            onClick={() => addWidget(map.id, "green")}
+            onClick={() => dispatch(addWidget(map.id, "green"))}
             className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
           >
             Green
@@ -88,7 +91,7 @@ export default function MappingRow({
         </div>
         {/* ... */}
         <button
-          onClick={() => removeFromLayout(map.id)}
+          onClick={() => dispatch(removeFromLayout(map.id))}
           className="text-gray-100 h-full ml-auto bg-red-400"
         >
           <p className="-rotate-90 m-0">remove</p>
@@ -97,27 +100,13 @@ export default function MappingRow({
       <div className="flex w-full h-full relative overflow-y-hidden">
         {!map.next && (
           <div className="absolute top-0 right-0 m-[2px]">
-            <AddButtons addToLayout={addToLayout} />
+            <AddButtons />
           </div>
         )}
         {map?.next?.type === "row" ? (
-          <MappingRow
-            map={map.next}
-            addToLayout={addToLayout}
-            removeFromLayout={removeFromLayout}
-            addWidget={addWidget}
-            removeWidget={removeWidget}
-          />
+          <MappingRow map={map.next} />
         ) : (
-          map?.next?.type === "column" && (
-            <MappingColumn
-              map={map.next}
-              addToLayout={addToLayout}
-              removeFromLayout={removeFromLayout}
-              addWidget={addWidget}
-              removeWidget={removeWidget}
-            />
-          )
+          map?.next?.type === "column" && <MappingColumn map={map.next} />
         )}
       </div>
     </div>
