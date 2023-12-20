@@ -5,7 +5,10 @@ import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET } from "./
 
 const initialLayoutState = {
     map: {
-        outsideContent: [],
+        mainContent: [{
+            id: String(Math.floor(Math.random()*10000)),
+            type: "green"
+        }],
         next: null
     }
 }
@@ -42,27 +45,37 @@ export const rootReducer = (state=initialLayoutState, action) => {
                 type: action.payload.widgetType
             }
             layoutCopy = { ...state.map };
-            current = layoutCopy;
-            // ojo cuando quiera operar widgets en el layout current.id podría no existir
-            while (current) {
-            if (current.id === action.payload.id) {
-                current.insideContent.push(newWidget);
-                break
-            }
-            current = current.next;
+            // check if add is on mainContent
+            if (action.payload.layoutId === 'main') {
+                layoutCopy.mainContent.push(newWidget)
+            } else {
+                // track the node that should hold the widget
+                current = layoutCopy;
+                while (current) {
+                if (current.id === action.payload.id) {
+                    current.insideContent.push(newWidget);
+                    break
+                }
+                current = current.next;
+                }
             }
             return { ...state, map: {...layoutCopy} }
 
         case REMOVE_WIDGET:
             layoutCopy = { ...state.map };
-            current = layoutCopy;
-            // ojo cuando quiera operar widgets en el layout current.id podría no existir
-            while (current) {
-            if (current.id === action.payload.layoutId) {
-                current.insideContent = current.insideContent.filter(widget => widget.id !== action.payload.widgetId);
-                break
-            }
-            current = current.next;
+            // check if delete is from mainContent
+            if (action.payload.layoutId === 'main') {
+                layoutCopy.mainContent = layoutCopy.mainContent.filter(widget => widget.id !== action.payload.widgetId);
+            } else {
+                // track the node holding the widget and delete it
+                current = layoutCopy;
+                while (current) {
+                if (current.id === action.payload.layoutId) {
+                    current.insideContent = current.insideContent.filter(widget => widget.id !== action.payload.widgetId);
+                    break
+                }
+                current = current.next;
+                }
             }
             return { ...state, map: {...layoutCopy} }
 

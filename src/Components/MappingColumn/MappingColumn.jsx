@@ -1,13 +1,19 @@
 /* eslint-disable react/prop-types */
-import { useState, createElement } from "react";
-import { useDispatch } from "react-redux";
-import { removeFromLayout, addWidget, removeWidget } from "../../redux/actions";
+
+// major components
 import MappingRow from "../MappingRow/MappingRow";
+// minor components
 import AddButtons from "../AddButtons/AddButtons";
+// hooks and tools
+import { useState, createElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { widgets } from "../../layout";
+// actions
+import { removeFromLayout, addWidget, removeWidget } from "../../redux/actions";
 
 export default function MappingColumn({ map }) {
   const dispatch = useDispatch();
+  const mainContent = useSelector((state) => state.map.mainContent);
 
   const [drag, setDrag] = useState({
     active: false,
@@ -99,8 +105,17 @@ export default function MappingColumn({ map }) {
       </div>
       <div className="flex w-full h-full relative overflow-x-hidden">
         {!map.next && (
-          <div className="absolute top-0 right-0 m-[2px]">
-            <AddButtons />
+          <div>
+            <div className="absolute top-0 right-0 m-[2px]">
+              <AddButtons />
+            </div>
+            {mainContent.map((elem, index) =>
+              createElement(widgets[elem.type], {
+                key: index,
+                direction: "main",
+                onClose: () => dispatch(removeWidget("main", elem.id)),
+              })
+            )}
           </div>
         )}
         {map?.next?.type === "row" ? (
