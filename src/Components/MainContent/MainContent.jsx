@@ -13,7 +13,7 @@ export default function MainContent() {
   const dispatch = useDispatch();
   const mainContent = useSelector((state) => state.map.mainContent);
   return (
-    <Droppable droppableId="mainContent-1">
+    <Droppable droppableId="mainContent-1" type="widget">
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
