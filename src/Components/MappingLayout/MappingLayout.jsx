@@ -9,9 +9,11 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 export default function MappingLayout({ map }) {
   return (
-    <div className="bg-yellow-200 h-[90dvh] w-[90%] flex relative">
+    <div className="bg-yellow-200 h-[90dvh] w-[90%] flex relative overflow-auto">
       <DragDropContext
-        onDragEnd={() => {console.log('dragging and dropping')}}
+        onDragEnd={() => {
+          console.log("dragging and dropping");
+        }}
       >
         {!map.next && <MainContent />}
         {map?.next?.type === "row" ? (

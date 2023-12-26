@@ -11,7 +11,7 @@ const initialLayoutState = {
             type: "green"
         }, {
             id: String(Math.floor(Math.random()*10000)),
-            type: "green"
+            type: "purple"
         }
     ],
         next: null

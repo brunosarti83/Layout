@@ -17,7 +17,7 @@ export default function Green({ id, index, direction, onClose }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={styles}
+          style={{ ...styles, ...provided.draggableProps.style }}
           className="bg-emerald-500 rounded-[20px] flex flex-col flex-shrink-0"
         >
           <p className="m-auto">Green Content</p>
