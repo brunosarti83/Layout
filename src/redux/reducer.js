@@ -5,10 +5,15 @@ import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET } from "./
 
 const initialLayoutState = {
     map: {
-        mainContent: [{
+        mainContent: [
+            {
             id: String(Math.floor(Math.random()*10000)),
             type: "green"
-        }],
+        }, {
+            id: String(Math.floor(Math.random()*10000)),
+            type: "green"
+        }
+    ],
         next: null
     }
 }
