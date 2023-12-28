@@ -9,13 +9,13 @@ export default function Purple({ id, index, direction, onClose }) {
       direction === "column" ? "250px" : direction === "row" ? "100%" : "300px",
   };
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable draggableId={id.toString()} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={styles}
+          style={{ ...styles, ...provided.draggableProps.style }}
           className="bg-purple-500 rounded-[20px] flex-shrink-0 flex flex-col"
         >
           <p className="m-auto">Purple Content</p>

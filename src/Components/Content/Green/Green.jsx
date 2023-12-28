@@ -11,7 +11,7 @@ export default function Green({ id, index, direction, onClose }) {
       direction === "column" ? "250px" : direction === "row" ? "100%" : "300px",
   };
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable draggableId={id.toString()} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}

@@ -9,6 +9,8 @@ import { widgets } from "../../layout";
 // actions
 import { removeFromLayout, addWidget, removeWidget } from "../../redux/actions";
 import MainContent from "../MainContent/MainContent";
+// react-beatiful-dnd
+import { Droppable } from "react-beautiful-dnd";
 
 export default function MappingRow({ map }) {
   const dispatch = useDispatch();
@@ -68,16 +70,27 @@ export default function MappingRow({ map }) {
         >
           {}
         </button>
-        <div className="w-full h-full flex pl-1 py-2 gap-2 overflow-x-auto overflow-y-hidden">
-          {/* Here goes content */}
-          {map.insideContent.map((elem, index) =>
-            createElement(widgets[elem.type], {
-              key: index,
-              direction: map.type,
-              onClose: () => dispatch(removeWidget(map.id, elem.id)),
-            })
+        <Droppable droppableId={map.id} type="widget">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="w-full h-full flex pl-1 py-2 gap-2 overflow-x-auto overflow-y-hidden"
+            >
+              {/* Here goes content */}
+              {map.insideContent.map((elem, index) =>
+                createElement(widgets[elem.type], {
+                  direction: map.type,
+                  key: elem.id,
+                  index,
+                  id: elem.id,
+                  onClose: () => dispatch(removeWidget(map.id, elem.id)),
+                })
+              )}
+              {provided.placeholder}
+            </div>
           )}
-        </div>
+        </Droppable>
         {/* Este bloque de botones no tiene ningun sentido y solo sirve para mostrar que puedo cargar Widgets programaticamente */}
         <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
           <button

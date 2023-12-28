@@ -15,3 +15,10 @@ export const createNewNode = (type) => {
         next: null
     }
 }
+
+export const changeWidgetArray = (source, destination, array) => {
+    const widget = array[source.index]
+    array.splice(source.index, 1)
+    array.splice(destination.index, 0, widget)
+    return array
+}

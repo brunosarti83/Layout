@@ -3,6 +3,7 @@ export const ADD_TO_LAYOUT = 'ADD_TO_LAYOUT'
 export const REMOVE_FROM_LAYOUT = 'REMOVE_FROM_LAYOUT'
 export const ADD_WIDGET = 'ADD_WIDGET'
 export const REMOVE_WIDGET = 'REMOVE_WIDGET'
+export const REORDER = 'REORDER'
 
 
 export const addToLayout = (columnOrRow) => {
@@ -26,9 +27,16 @@ export const addWidget = (id, widgetType) => {
     }
 }
 
-export const removeWidget= (layoutId, widgetId) => {
+export const removeWidget = (layoutId, widgetId) => {
     return {
         type: REMOVE_WIDGET,
         payload: { layoutId, widgetId }
+    }
+}
+
+export const reorder = (result) => {
+    return {
+        type: REORDER,
+        payload: result
     }
 }
