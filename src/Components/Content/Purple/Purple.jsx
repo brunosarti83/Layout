@@ -4,9 +4,9 @@ import { Draggable } from "react-beautiful-dnd";
 export default function Purple({ id, index, direction, onClose }) {
   const styles = {
     width:
-      direction === "column" ? "100%" : direction === "row" ? "250px" : "300px",
+      direction === "column" ? "100%" : direction === "row" ? "250px" : "100%",
     height:
-      direction === "column" ? "250px" : direction === "row" ? "100%" : "300px",
+      direction === "column" ? "250px" : direction === "row" ? "100%" : "",
   };
   return (
     <Draggable draggableId={id.toString()} index={index}>

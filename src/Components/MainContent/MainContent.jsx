@@ -1,5 +1,6 @@
 // minor components
 import AddButtons from "../AddButtons/AddButtons";
+import { Fragment } from "react";
 // hooks and tools
 import { useSelector, useDispatch } from "react-redux";
 import { createElement } from "react";
@@ -18,12 +19,12 @@ export default function MainContent() {
         <div
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className="flex flex-wrap gap-2 p-2"
+          className="flex flex-col gap-2 p-2 w-full"
         >
           <div className="absolute top-0 right-0 m-[2px]">
             <AddButtons />
           </div>
-          {mainContent.map((elem, index) =>
+          {mainContent.map((elem, index) => 
             createElement(widgets[elem.type], {
               key: elem.id,
               index,
