@@ -15,7 +15,7 @@ export default function Purple({ id, index, direction, onClose }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={{ ...styles, ...provided.draggableProps.style }}
+          style={{ ...styles, ...provided.draggableProps.style, viewTransitionName: 'name-'+id }} //nuevo
           className="bg-purple-500 rounded-[20px] flex-shrink-0 flex flex-col"
         >
           <p className="m-auto">Purple Content</p>

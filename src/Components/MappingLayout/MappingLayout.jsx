@@ -10,14 +10,18 @@ import { useDispatch } from "react-redux";
 import { reorder } from "../../redux/actions";
 // react-beatiful-dnd
 import { DragDropContext } from "react-beautiful-dnd";
+// viewTransition
+import { viewTransitionWrapper } from "../../helpers/viewTransitionWrapper";
 
 export default function MappingLayout({ map }) {
   const dispatch = useDispatch();
 
   const handleDragEnd = (result) => {
-    console.log(result);
-    dispatch(reorder(result));
+    viewTransitionWrapper(() => {
+      dispatch(reorder(result));
+    })
   };
+
   return (
     <div className="bg-yellow-200 h-[90dvh] w-[90%] flex relative overflow-auto">
       <DragDropContext onDragEnd={handleDragEnd}>

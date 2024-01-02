@@ -70,7 +70,7 @@ export default function MappingRow({ map }) {
         >
           {}
         </button>
-        <Droppable droppableId={map.id} type="widget">
+        <Droppable droppableId={map.id} direction="horizontal" type="widget">
           {(provided) => (
             <div
               ref={provided.innerRef}
