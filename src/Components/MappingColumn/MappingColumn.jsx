@@ -64,7 +64,7 @@ export default function MappingColumn({ map }) {
       )}
       <div
         id="column"
-        className="bg-slate-600 flex flex-col ml-auto h-full relative"
+        className="bg-slate-800 bg-opacity-5 rounded-md flex flex-col ml-auto h-full relative"
         style={boxStyle}
       >
         <button
