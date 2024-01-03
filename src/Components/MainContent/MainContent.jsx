@@ -21,7 +21,7 @@ export default function MainContent() {
           {...provided.droppableProps}
           className="flex flex-col gap-2 p-2 w-full"
         >
-          <div className="absolute top-0 right-0 m-[2px]">
+          <div className="absolute top-2 right-2 m-[2px] z-50">
             <AddButtons />
           </div>
           {mainContent.map((elem, index) => 

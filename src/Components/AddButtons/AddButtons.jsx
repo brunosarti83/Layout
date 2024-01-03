@@ -8,7 +8,7 @@ export default function AddButtons() {
   return (
     <div className="flex gap-1">
       <button
-        onClick={() => dispatch(addToLayout("column"))}
+        onClick={() => dispatch(addToLayout("column", "right"))}
         className="bg-gray-300 h-6 px-2 text-center align-middle"
       >
         {"<"}
@@ -18,6 +18,12 @@ export default function AddButtons() {
         className="bg-gray-300 h-6 px-2 text-center align-middle"
       >
         {"v"}
+      </button>
+      <button
+        onClick={() => dispatch(addToLayout("column", "left"))}
+        className="bg-gray-300 h-6 px-2 text-center align-middle"
+      >
+        {">"}
       </button>
     </div>
   );

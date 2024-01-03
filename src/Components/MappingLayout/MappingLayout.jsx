@@ -23,7 +23,7 @@ export default function MappingLayout({ map }) {
   };
 
   return (
-    <div className="bg-yellow-200 h-[90dvh] w-[90%] flex relative overflow-auto">
+    <div className="bg-gray-50 h-[100dvh] w-full flex relative overflow-auto py-4">
       <DragDropContext onDragEnd={handleDragEnd}>
         {!map.next && <MainContent />}
         {map?.next?.type === "row" ? (

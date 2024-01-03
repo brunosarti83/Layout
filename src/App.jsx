@@ -5,7 +5,7 @@ function App() {
   const map = useSelector((state) => state.map);
 
   return (
-    <div className="w-full min-h-screen bg-red-500 flex pt-4 justify-center items-center">
+    <div className="w-full h-screen bg-gray-50 flex px-4 justify-center items-center">
       <MappingLayout map={map} />
     </div>
   );

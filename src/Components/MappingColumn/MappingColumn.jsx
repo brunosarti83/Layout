@@ -40,7 +40,8 @@ export default function MappingColumn({ map }) {
     if (active) {
       const xDiff = Math.abs(x - e.clientX);
       const newW =
-        x < e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff;
+        map.side === 'left' ? (x > e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff) :
+        (x < e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff)
 
       setDrag({ ...drag, x: e.clientX });
       setDims({ w: newW });
@@ -52,20 +53,23 @@ export default function MappingColumn({ map }) {
   };
 
   return (
-    <div className="w-full h-full flex flex-row-reverse relative">
+    <div className={`w-full h-full flex ${map.side !== "left" && "flex-row-reverse"} relative`}>
       {drag.active && (
         <div
+          id="drag-cover"
           onMouseMove={resizeFrame}
           onMouseUp={stopResize}
           className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
         ></div>
       )}
       <div
+        id="column"
         className="bg-slate-600 flex flex-col ml-auto h-full relative"
         style={boxStyle}
       >
         <button
-          className="float-left w-[10px] h-full border-solid border-white border-l-2 absolute left-0"
+          id="handle"
+          className={`w-[10px] h-full border-solid absolute ${map.side === "left" ? "right-0" : "left-0"}`}
           onMouseDown={startResize}
         >
           {}

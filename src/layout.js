@@ -6,11 +6,14 @@ export const widgets = {
     purple: Purple
 }
 
-export const createNewNode = (type) => {
+export const createNewNode = (args) => {
+    const type = args[0]
+    const side = args[1]
     const id = String(Math.floor(Math.random()*10000))
     return {
         id,
         type,
+        side,
         insideContent: [],
         next: null
     }
