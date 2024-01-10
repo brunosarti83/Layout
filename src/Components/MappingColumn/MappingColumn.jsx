@@ -14,6 +14,7 @@ import { Droppable } from "react-beautiful-dnd";
 
 export default function MappingColumn({ map }) {
   const dispatch = useDispatch();
+  const [showRemove, setShowRemove] = useState(false);
 
   const [drag, setDrag] = useState({
     active: false,
@@ -40,8 +41,13 @@ export default function MappingColumn({ map }) {
     if (active) {
       const xDiff = Math.abs(x - e.clientX);
       const newW =
-        map.side === 'left' ? (x > e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff) :
-        (x < e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff)
+        map.side === "left"
+          ? x > e.clientX
+            ? Math.max(dims.w - xDiff, 150)
+            : dims.w + xDiff
+          : x < e.clientX
+          ? Math.max(dims.w - xDiff, 150)
+          : dims.w + xDiff;
 
       setDrag({ ...drag, x: e.clientX });
       setDims({ w: newW });
@@ -53,7 +59,11 @@ export default function MappingColumn({ map }) {
   };
 
   return (
-    <div className={`w-full h-full flex ${map.side !== "left" && "flex-row-reverse"} relative`}>
+    <div
+      className={`w-full h-full flex ${
+        map.side !== "left" && "flex-row-reverse"
+      } relative`}
+    >
       {drag.active && (
         <div
           id="drag-cover"
@@ -69,7 +79,9 @@ export default function MappingColumn({ map }) {
       >
         <button
           id="handle"
-          className={`w-[10px] h-full border-solid absolute ${map.side === "left" ? "right-0" : "left-0"}`}
+          className={`w-[10px] h-full border-solid absolute ${
+            map.side === "left" ? "right-0" : "left-0"
+          } hover:cursor-col-resize`}
           onMouseDown={startResize}
         >
           {}
@@ -111,12 +123,21 @@ export default function MappingColumn({ map }) {
           </button>
         </div>
         {/* ... */}
-        <button
-          onClick={() => dispatch(removeFromLayout(map.id))}
-          className="text-gray-100 w-full mt-auto bg-red-400 ml-auto"
+        <div
+          className="w-full mt-auto h-[25px] overflow-hidden relative"
+          onMouseEnter={() => setShowRemove(true)}
+          onMouseLeave={() => setShowRemove(false)}
         >
-          remove
-        </button>
+          <button
+            onClick={() => dispatch(removeFromLayout(map.id))}
+            className={
+              "text-gray-100 w-full h-[25px] mt-auto bg-red-400 ml-auto " +
+              `relative ${showRemove ? "" : "bottom-[-25px]"}`
+            }
+          >
+            remove
+          </button>
+        </div>
       </div>
       <div className="flex w-full h-full relative overflow-x-hidden">
         {!map.next && <MainContent />}

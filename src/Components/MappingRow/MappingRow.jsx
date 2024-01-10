@@ -14,6 +14,7 @@ import { Droppable } from "react-beautiful-dnd";
 
 export default function MappingRow({ map }) {
   const dispatch = useDispatch();
+  const [showRemove, setShowRemove] = useState(false);
 
   const [drag, setDrag] = useState({
     active: false,
@@ -61,11 +62,12 @@ export default function MappingRow({ map }) {
         ></div>
       )}
       <div
-        className="bg-slate-600 flex mb-auto w-full relative"
+        className="bg-slate-800 bg-opacity-5 flex mb-auto w-full relative"
         style={boxStyle}
       >
         <button
-          className="w-full h-[10px] border-solid border-white border-b-2 absolute bottom-0"
+          id="handle"
+          className="w-full h-[10px] border-solid border-white border-b-2 absolute bottom-0 hover:cursor-row-resize"
           onMouseDown={startResize}
         >
           {}
@@ -107,12 +109,21 @@ export default function MappingRow({ map }) {
           </button>
         </div>
         {/* ... */}
-        <button
-          onClick={() => dispatch(removeFromLayout(map.id))}
-          className="text-gray-100 h-full ml-auto bg-red-400"
+        <div
+          className="ml-auto h-full w-[25px] overflow-hidden relative"
+          onMouseEnter={() => setShowRemove(true)}
+          onMouseLeave={() => setShowRemove(false)}
         >
-          <p className="-rotate-90 m-0">remove</p>
-        </button>
+          <button
+            onClick={() => dispatch(removeFromLayout(map.id))}
+            className={
+              "text-gray-100 h-full ml-auto bg-red-400 " +
+              `relative ${showRemove ? "" : "right-[-25px]"}`
+            }
+          >
+            <p className="-rotate-90 relative right-[15px]">remove</p>
+          </button>
+        </div>
       </div>
       <div className="flex w-full h-full relative overflow-y-hidden">
         {!map.next && <MainContent />}
