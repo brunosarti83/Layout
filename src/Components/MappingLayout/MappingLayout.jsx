@@ -4,6 +4,7 @@
 import MainContent from "../MainContent/MainContent";
 import MappingColumn from "../MappingColumn/MappingColumn";
 import MappingRow from "../MappingRow/MappingRow";
+import AddWidget from "../AddWidget/AddWidget";
 // hoooks and tools
 import { useDispatch } from "react-redux";
 // actions
@@ -19,7 +20,7 @@ export default function MappingLayout({ map }) {
   const handleDragEnd = (result) => {
     viewTransitionWrapper(() => {
       dispatch(reorder(result));
-    })
+    });
   };
 
   return (
@@ -32,6 +33,9 @@ export default function MappingLayout({ map }) {
           map?.next?.type === "column" && <MappingColumn map={map.next} />
         )}
       </DragDropContext>
+      <div className="absolute bottom-10 left-10">
+        <AddWidget />
+      </div>
     </div>
   );
 }
