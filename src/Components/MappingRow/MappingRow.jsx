@@ -62,7 +62,7 @@ export default function MappingRow({ map }) {
         ></div>
       )}
       <div
-        className="bg-slate-800 bg-opacity-5 flex mb-auto w-full relative"
+        className="bg-slate-800 bg-opacity-5 flex mb-auto w-full rounded-md relative"
         style={boxStyle}
       >
         <button
@@ -110,7 +110,7 @@ export default function MappingRow({ map }) {
         </div>
         {/* ... */}
         <div
-          className="ml-auto h-full w-[25px] overflow-hidden relative"
+          className="ml-auto h-full w-[25px] overflow-hidden relative pb-[3px]"
           onMouseEnter={() => setShowRemove(true)}
           onMouseLeave={() => setShowRemove(false)}
         >
@@ -118,7 +118,7 @@ export default function MappingRow({ map }) {
             onClick={() => dispatch(removeFromLayout(map.id))}
             className={
               "text-gray-100 h-full ml-auto bg-red-400 " +
-              `relative ${showRemove ? "" : "right-[-25px]"}`
+              `relative right-[-25px] transition-all duration-150 ${showRemove ? "translate-x-[-25px]" : null}`
             }
           >
             <p className="-rotate-90 relative right-[15px]">remove</p>

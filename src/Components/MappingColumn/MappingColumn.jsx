@@ -60,7 +60,7 @@ export default function MappingColumn({ map }) {
 
   return (
     <div
-      className={`w-full h-full flex ${
+      className={`w-full h-full flex gap-1 ${
         map.side !== "left" && "flex-row-reverse"
       } relative`}
     >
@@ -132,7 +132,7 @@ export default function MappingColumn({ map }) {
             onClick={() => dispatch(removeFromLayout(map.id))}
             className={
               "text-gray-100 w-full h-[25px] mt-auto bg-red-400 ml-auto " +
-              `relative ${showRemove ? "" : "bottom-[-25px]"}`
+              `relative bottom-[-25px] transition-all duration-150 ${showRemove ? "translate-y-[-25px]" : null}`
             }
           >
             remove
