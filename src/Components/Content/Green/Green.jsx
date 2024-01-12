@@ -2,6 +2,7 @@
 
 // react-beatiful-dnd
 import { Draggable } from "react-beautiful-dnd";
+import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
 
 export default function Green({ id, index, direction, onClose }) {
   const styles = {
@@ -17,17 +18,17 @@ export default function Green({ id, index, direction, onClose }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={{ ...styles, ...provided.draggableProps.style, viewTransitionName: 'name-'+id  }} //nuevo
-          className="bg-emerald-500 rounded-[20px] flex flex-col flex-shrink-0"
+          style={{
+            ...styles,
+            ...provided.draggableProps.style,
+            viewTransitionName: "name-" + id,
+          }}
+          className="bg-green-200 rounded-[20px] flex flex-col flex-shrink-0"
         >
-          <p className="m-auto">Green Content</p>
-          <button
-            type="button"
-            onClick={onClose}
-            className="m-auto p-2 bg-gray-400 border-[1px] border-solid border-gray-700"
-          >
-            Close
-          </button>
+          <div className="w-full flex justify-start px-4 py-2">
+            <ThreeDotsMenu onClose={onClose} />
+          </div>
+          {"<BlogExample />"}
         </div>
       )}
     </Draggable>

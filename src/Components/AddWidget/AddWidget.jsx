@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { HiOutlineSquaresPlus } from "react-icons/hi2";
 
 export default function AddWidget() {
   const [showAdd, setShowAdd] = useState(false);
@@ -16,7 +16,7 @@ export default function AddWidget() {
         }`}
       >
         <button className="bg-sky-500 h-full w-full rounded-full flex">
-          <FaPlus className="m-auto text-xl" />
+          <HiOutlineSquaresPlus className="m-auto text-[30px]" />
         </button>
       </div>
     </div>
