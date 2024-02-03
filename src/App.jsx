@@ -1,4 +1,4 @@
-import MappingLayout from "./Components/MappingLayout/MappingLayout";
+import Layout from "./Components/Layout/Layout";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className="w-full h-screen bg-gray-50 flex px-4 justify-center items-center">
-      <MappingLayout map={map} />
+      <Layout map={map} />
     </div>
   );
 }

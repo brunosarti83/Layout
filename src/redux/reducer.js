@@ -5,8 +5,46 @@ import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, REORDER }
 
 const initialLayoutState = {
     map: {
-        mainContent: [],
-        next: null
+        id: String(Math.floor(Math.random()*10000)),
+        content: [
+            {
+                id: '0001',
+                type: 'green'
+            },
+            {
+                id: '0002',
+                type: 'green'
+            },
+        ],
+        column: false,
+        a: {
+            id: String(Math.floor(Math.random()*10000)),
+            content: [
+                {
+                    id: '0001',
+                    type: 'green'
+                },
+                {
+                    id: '0002',
+                    type: 'green'
+                },
+            ],
+            column: false,
+            a: null,
+            b: null
+        },
+        b: {
+            id: String(Math.floor(Math.random()*10000)),
+            content: [
+                {
+                    id: '0003',
+                    type: 'green'
+                }
+            ],
+            column: false,
+            a: null,
+            b: null
+        },
     }
 }
 
