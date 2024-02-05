@@ -72,7 +72,7 @@ export default function Columns({ nodeA, nodeB }) {
       )}
       <div
         id="columnA"
-        className="bg-slate-800 bg-opacity-5 rounded-md flex flex-col ml-auto h-full relative"
+        className="rounded-md flex flex-col ml-auto h-full relative bg-slate-800 bg-opacity-5"
         style={boxStyle}
       >
         <button
@@ -105,7 +105,7 @@ export default function Columns({ nodeA, nodeB }) {
           <RemoveBtn target={nodeA.Id} column={nodeA.column} />
         ) : null}
       </div>
-      <div className="flex flex-col w-full h-full relative overflow-x-hidden">
+      <div className="flex flex-col w-full h-full relative overflow-x-hidden bg-slate-800 bg-opacity-5 rounded-md">
         <Unit map={nodeB} />
         {!nodeB.a ? (
           <RemoveBtn target={nodeB.Id} column={nodeB.column} />

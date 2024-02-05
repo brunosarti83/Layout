@@ -28,7 +28,7 @@ export default function Green({ id, index, direction, onClose }) {
           <div className="w-full flex justify-start px-4 py-2">
             <ThreeDotsMenu onClose={onClose} />
           </div>
-          {"<BlogExample />"}
+          {"<WidgetExample />"}
         </div>
       )}
     </Draggable>

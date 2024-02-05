@@ -1,21 +1,19 @@
-import Green from "./Components/Content/Green/Green"
-import Purple from "./Components/Content/Purple/Purple"
+import Green from "./Components/Widgets/Green/Green"
+import Purple from "./Components/Widgets/Purple/Purple"
 
 export const widgets = {
     green: Green,
     purple: Purple
 }
 
-export const createNewNode = (args) => {
-    const type = args[0]
-    const side = args[1]
+export const createNewNode = (columnOrRow) => {
     const id = String(Math.floor(Math.random()*10000))
     return {
         id,
-        type,
-        side,
-        insideContent: [],
-        next: null
+        content: [],
+        column: columnOrRow === "column",
+        a: null,
+        b: null
     }
 }
 

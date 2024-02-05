@@ -94,7 +94,7 @@ export default function Rows({ nodeA, nodeB }) {
           <RemoveBtn target={nodeA.Id} column={nodeA.column} />
         ) : null}
       </div>
-      <div className="flex w-full h-full relative overflow-y-hidden">
+      <div className="flex w-full h-full relative overflow-y-hidden bg-slate-800 bg-opacity-5 rounded-md"> 
         <Unit map={nodeB} />
         {!nodeB.a ? (
           <RemoveBtn target={nodeB.Id} column={nodeB.column} />
