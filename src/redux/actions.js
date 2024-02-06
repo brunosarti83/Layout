@@ -6,10 +6,10 @@ export const REMOVE_WIDGET = 'REMOVE_WIDGET'
 export const REORDER = 'REORDER'
 
 
-export const addToLayout = (columnOrRow) => {
+export const addToLayout = (getId, columnOrRow) => {
     return {
         type: ADD_TO_LAYOUT,
-        payload: columnOrRow
+        payload: { getId, columnOrRow }
     }
 }
 

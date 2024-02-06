@@ -8,16 +8,8 @@ const initialLayoutState = {
         id: String(Math.floor(Math.random()*10000)),
         content: [],
         column: true,
-        a: {
-            id: String(Math.floor(Math.random()*10000)),
-            content: [],
-            column: true
-        },
-        b: {
-            id: String(Math.floor(Math.random()*10000)),
-            content: [],
-            column: true
-        },
+        a: null,
+        b: null,
     }
 }
 
@@ -26,14 +18,10 @@ export const rootReducer = (state=initialLayoutState, action) => {
     let current;
     switch (action.type) {
         case ADD_TO_LAYOUT:
-            const newNode = splitTheNode(action.payload)
             layoutCopy = { ...state.map }
-            current = layoutCopy
-            while (current.next) {
-                current = current.next
-            }
-            current.next = newNode
-            return { ...state, map: {...layoutCopy} }
+            const newState = splitTheNode({ node: layoutCopy, ...action.payload })
+            console.log(newState)
+            return { ...state, map: {...newState} }
 
         case REMOVE_FROM_LAYOUT:
             layoutCopy = { ...state.map };

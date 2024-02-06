@@ -29,15 +29,16 @@ export const getNode = (node, getId) => {
     return null
 }
 
-export const splitTheNode = (node, getId, columnOrRow) => {
+export const splitTheNode = ({ node, getId, columnOrRow }) => {
     const toSplit = getNode(node, getId)
-    toSplit.column = columnOrRow !== 'column'
+    node.column = columnOrRow !== 'column'
     const nodeA = createNewNode(columnOrRow)
     const nodeB = createNewNode(columnOrRow)
     nodeA.content = [...toSplit.content]
     toSplit.content = []
     toSplit.a = nodeA
     toSplit.b = nodeB
+    return node
 }
 
 export const changeWidgetArray = (source, destination, array) => {

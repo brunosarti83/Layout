@@ -22,7 +22,7 @@ export default function Content({ map }) {
           className="flex flex-col gap-2 p-2 w-full h-full"
         >
           <div className="absolute top-2 right-0 m-[2px] z-50">
-            <AddButtons />
+            <AddButtons id={map.id}/>
           </div>
           {map.content.map((elem, index) =>
             createElement(widgets[elem.type], {

@@ -6,7 +6,7 @@ import { VscSplitHorizontal } from "react-icons/vsc";
 import { VscSplitVertical } from "react-icons/vsc";
 
 
-export default function AddButtons() {
+export default function AddButtons({ id }) {
   const dispatch = useDispatch();
   const [showAdd, setShowAdd] = useState(false);
 
@@ -22,13 +22,13 @@ export default function AddButtons() {
         }`}
       >
         <button
-          onClick={() => dispatch(addToLayout("column"))}
+          onClick={() => dispatch(addToLayout(id, "row"))}
           className="bg-sky-500/5 h-full w-[25px] rounded-[5px] text-center align-middle"
         >
           <VscSplitVertical className="mx-auto text-lg text-gray-500" />
         </button>
         <button
-          onClick={() => dispatch(addToLayout("row"))}
+          onClick={() => dispatch(addToLayout(id, "column"))}
           className="bg-sky-500/5 h-full w-[25px] rounded-[5px] text-center align-middle"
         >
           <VscSplitHorizontal className="mx-auto text-lg text-gray-500" />
