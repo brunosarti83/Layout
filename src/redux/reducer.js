@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { changeWidgetArray, createNewNode } from "../layout";
+import { changeWidgetArray, splitTheNode } from "../layout";
 import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, REORDER } from "./actions";
 
 
@@ -26,7 +26,7 @@ export const rootReducer = (state=initialLayoutState, action) => {
     let current;
     switch (action.type) {
         case ADD_TO_LAYOUT:
-            const newNode = createNewNode(action.payload)
+            const newNode = splitTheNode(action.payload)
             layoutCopy = { ...state.map }
             current = layoutCopy
             while (current.next) {

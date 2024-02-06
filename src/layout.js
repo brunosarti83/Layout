@@ -17,6 +17,29 @@ export const createNewNode = (columnOrRow) => {
     }
 }
 
+export const getNode = (node, getId) => {
+    if (!node) return null
+    if (node.id === getId) {
+       return node
+    }
+    const nodeA = getNode(node.a, getId)
+    if (nodeA) return nodeA
+    const nodeB = getNode(node.b, getId)
+    if (nodeB) return nodeB
+    return null
+}
+
+export const splitTheNode = (node, getId, columnOrRow) => {
+    const toSplit = getNode(node, getId)
+    toSplit.column = columnOrRow !== 'column'
+    const nodeA = createNewNode(columnOrRow)
+    const nodeB = createNewNode(columnOrRow)
+    nodeA.content = [...toSplit.content]
+    toSplit.content = []
+    toSplit.a = nodeA
+    toSplit.b = nodeB
+}
+
 export const changeWidgetArray = (source, destination, array) => {
     const widget = array[source.index]
     array.splice(source.index, 1)
