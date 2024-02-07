@@ -5,7 +5,6 @@ import { useState } from "react";
 import { VscSplitHorizontal } from "react-icons/vsc";
 import { VscSplitVertical } from "react-icons/vsc";
 
-
 export default function AddButtons({ id }) {
   const dispatch = useDispatch();
   const [showAdd, setShowAdd] = useState(false);

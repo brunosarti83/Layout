@@ -31,7 +31,7 @@ export const getNode = (node, getId) => {
 
 export const splitTheNode = ({ node, getId, columnOrRow }) => {
     const toSplit = getNode(node, getId)
-    node.column = columnOrRow !== 'column'
+    toSplit.column = columnOrRow === 'column'
     const nodeA = createNewNode(columnOrRow)
     const nodeB = createNewNode(columnOrRow)
     nodeA.content = [...toSplit.content]
