@@ -29,7 +29,7 @@ export default function RemoveBtn({ targetId, column }) {
         </div>
       ) : (
         <div
-          className="ml-auto h-full w-[25px] overflow-hidden relative pb-[3px]"
+          className="ml-auto h-full w-[25px] overflow-hidden relative"
           onMouseEnter={() => setShowRemove(true)}
           onMouseLeave={() => setShowRemove(false)}
         >

@@ -11,7 +11,7 @@ export default function AddButtons({ id }) {
 
   return (
     <div
-      className="w-[80px] h-[50px] flex bg-gradient-to-tr from-gray-100/10 to-gray-150/15 drop-shadow-md overflow-hidden relative rounded-[10px]"
+      className="w-[60px] h-[40px] flex bg-gradient-to-tr from-gray-100/10 to-gray-150/15 drop-shadow-md overflow-hidden relative rounded-[10px]"
       onMouseEnter={() => setShowAdd(true)}
       onMouseLeave={() => setShowAdd(false)}
     >

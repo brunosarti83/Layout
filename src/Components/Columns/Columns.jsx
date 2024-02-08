@@ -4,15 +4,10 @@
 import Unit from "../Unit/Unit";
 // hooks and tools
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-// actions
-import { addWidget } from "../../redux/actions";
 // minor components
 import RemoveBtn from "../RemoveBtn/RemoveBtn";
 
 export default function Columns({ nodeA, nodeB }) {
-  const dispatch = useDispatch();
-
   const [drag, setDrag] = useState({
     active: false,
     x: "",
@@ -58,7 +53,7 @@ export default function Columns({ nodeA, nodeB }) {
   return (
     <div
       id="wrapperForTwoColumns"
-      className={`w-full h-full flex gap-1 ${
+      className={`w-full h-full flex gap-0 ${
         nodeA.side !== "left" && "flex-row-reverse"
       } relative`}
     >
@@ -72,25 +67,30 @@ export default function Columns({ nodeA, nodeB }) {
       )}
       <div
         id="columnA"
-        className="rounded-md flex flex-col ml-auto h-full relative bg-slate-800 bg-opacity-5"
+        className={`rounded-md flex flex-col ml-auto h-full relative overflow-x-hidden ${
+          !nodeA.a && "bg-slate-800 bg-opacity-5"
+        }`}
         style={boxStyle}
       >
-        <button
-          id="handle"
-          className={`w-[10px] h-full border-solid absolute ${
-            nodeA.side === "left" ? "right-0" : "left-0"
-          } hover:cursor-col-resize`}
-          onMouseDown={startResize}
-        >
-          {}
-        </button>
         <Unit map={nodeA} />
-
         {!nodeA.a ? (
           <RemoveBtn target={nodeA.Id} column={nodeA.column} />
         ) : null}
       </div>
-      <div className="flex flex-col w-full h-full relative overflow-x-hidden bg-slate-800 bg-opacity-5 rounded-md">
+      <div id="gap" className="w-1 relative">
+        <button
+          id="handle"
+          className={`w-1 h-full absolute hover:cursor-col-resize`}
+          onMouseDown={startResize}
+        >
+          {}
+        </button>
+      </div>
+      <div
+        className={`flex flex-col w-full h-full relative overflow-x-hidden ${
+          !nodeB.a && "bg-slate-800 bg-opacity-5"
+        } rounded-md`}
+      >
         <Unit map={nodeB} />
         {!nodeB.a ? (
           <RemoveBtn target={nodeB.Id} column={nodeB.column} />

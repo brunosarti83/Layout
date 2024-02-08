@@ -4,15 +4,10 @@
 import Unit from "../Unit/Unit";
 // hooks and tools
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-// actions
-import { addWidget } from "../../redux/actions";
 // minor components
 import RemoveBtn from "../RemoveBtn/RemoveBtn";
 
 export default function Rows({ nodeA, nodeB }) {
-  const dispatch = useDispatch();
-
   const [drag, setDrag] = useState({
     active: false,
     y: "",
@@ -63,23 +58,30 @@ export default function Rows({ nodeA, nodeB }) {
       )}
       <div
         id="rowA"
-        className="bg-slate-800 bg-opacity-5 flex mb-auto w-full rounded-md relative"
+        className={`${
+          !nodeA.a && "bg-slate-800 bg-opacity-5"
+        } flex mb-auto w-full rounded-md relative overflow-y-hidden`}
         style={boxStyle}
       >
-        <button
-          id="handle"
-          className="w-full h-[10px] border-solid border-white border-b-2 absolute bottom-0 hover:cursor-row-resize"
-          onMouseDown={startResize}
-        >
-          {}
-        </button>
         <Unit map={nodeA} />
-
         {!nodeA.a ? (
           <RemoveBtn target={nodeA.Id} column={nodeA.column} />
         ) : null}
       </div>
-      <div className="flex w-full h-full relative overflow-y-hidden bg-slate-800 bg-opacity-5 rounded-md">
+      <div className="h-1 relative">
+        <button
+          id="handle"
+          className="w-full h-1 absolute bottom-0 hover:cursor-row-resize"
+          onMouseDown={startResize}
+        >
+          {}
+        </button>
+      </div>
+      <div
+        className={`flex w-full h-full relative overflow-y-hidden ${
+          !nodeB.a && "bg-slate-800 bg-opacity-5"
+        } rounded-md`}
+      >
         <Unit map={nodeB} />
         {!nodeB.a ? (
           <RemoveBtn target={nodeB.Id} column={nodeB.column} />
