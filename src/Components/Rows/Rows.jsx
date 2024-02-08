@@ -3,7 +3,7 @@
 // major components
 import Unit from "../Unit/Unit";
 // hooks and tools
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 // minor components
 import RemoveBtn from "../RemoveBtn/RemoveBtn";
 
@@ -14,12 +14,18 @@ export default function Rows({ nodeA, nodeB }) {
   });
 
   const [dims, setDims] = useState({
-    h: 200,
+    h: null,
   });
 
   const boxStyle = {
-    height: `${dims.h}px`,
+    height: dims.h ? `${dims.h}px` : '100%'
   };
+
+  const refA = useRef(null)
+
+  useEffect(() => {
+    setDims({...dims, h: refA.current.parentElement.offsetHeight})
+  }, [])
 
   const startResize = (e) => {
     setDrag({
@@ -48,19 +54,20 @@ export default function Rows({ nodeA, nodeB }) {
     <div
       id="wrapperForTwoRows"
       className="w-full h-full flex flex-col relative"
-    >
+      >
       {drag.active && (
         <div
-          onMouseMove={resizeFrame}
-          onMouseUp={stopResize}
-          className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
+        onMouseMove={resizeFrame}
+        onMouseUp={stopResize}
+        className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
         ></div>
-      )}
+        )}
       <div
         id="rowA"
+        ref={refA}
         className={`${
           !nodeA.a && "bg-slate-800 bg-opacity-5"
-        } flex mb-auto w-full rounded-md relative overflow-y-hidden`}
+        } flex w-full rounded-md relative overflow-y-hidden`}
         style={boxStyle}
       >
         <Unit map={nodeA} />

@@ -3,7 +3,7 @@
 // major components
 import Unit from "../Unit/Unit";
 // hooks and tools
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 // minor components
 import RemoveBtn from "../RemoveBtn/RemoveBtn";
 
@@ -14,12 +14,18 @@ export default function Columns({ nodeA, nodeB }) {
   });
 
   const [dims, setDims] = useState({
-    w: 200,
+    w: null,
   });
 
   const boxStyle = {
-    width: `${dims.w}px`,
+    width: dims.w ? `${dims.w}px` : '100%',
   };
+
+  const refA = useRef(null)
+
+  useEffect(() => {
+    setDims({...dims, w: refA.current.parentElement.offsetWidth})
+  },[])
 
   const startResize = (e) => {
     setDrag({
@@ -67,7 +73,8 @@ export default function Columns({ nodeA, nodeB }) {
       )}
       <div
         id="columnA"
-        className={`rounded-md flex flex-col ml-auto h-full relative overflow-x-hidden ${
+        ref={refA}
+        className={`rounded-md flex flex-col h-full relative overflow-x-hidden ${
           !nodeA.a && "bg-slate-800 bg-opacity-5"
         }`}
         style={boxStyle}
