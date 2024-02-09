@@ -37,13 +37,8 @@ export default function Columns({ nodeA, nodeB }) {
   const resizeFrame = (e) => {
     const { active, x } = drag;
     if (active) {
-      const xDiff = Math.abs(x - e.clientX);
-      const newW =
-        nodeA.side === "left"
-          ? x > e.clientX
-            ? Math.max(dims.w - xDiff, 150)
-            : dims.w + xDiff
-          : x < e.clientX
+      const xDiff = Math.abs(x - e.clientX)*6;
+      const newW = x < e.clientX
           ? Math.max(dims.w - xDiff, 150)
           : dims.w + xDiff;
 
@@ -59,9 +54,7 @@ export default function Columns({ nodeA, nodeB }) {
   return (
     <div
       id="wrapperForTwoColumns"
-      className={`w-full h-full flex gap-0 ${
-        nodeA.side !== "left" && "flex-row-reverse"
-      } relative`}
+      className="w-full h-full flex gap-0 flex-row-reverse relative"
     >
       {drag.active && (
         <div
@@ -84,10 +77,10 @@ export default function Columns({ nodeA, nodeB }) {
           <RemoveBtn target={nodeA.Id} column={nodeA.column} />
         ) : null}
       </div>
-      <div id="gap" className="w-1 relative">
+      <div id="gap" className="w-1 relative flex-shrink-0">
         <button
           id="handle"
-          className={`w-1 h-full absolute hover:cursor-col-resize`}
+          className="w-1 h-full absolute hover:cursor-col-resize flex-shrink-0"
           onMouseDown={startResize}
         >
           {}

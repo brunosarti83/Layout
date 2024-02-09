@@ -37,7 +37,7 @@ export default function Rows({ nodeA, nodeB }) {
   const resizeFrame = (e) => {
     const { active, y } = drag;
     if (active) {
-      const yDiff = Math.abs(y - e.clientY);
+      const yDiff = Math.abs(y - e.clientY)*3;
       const newH =
         y < e.clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 150);
 
@@ -75,10 +75,10 @@ export default function Rows({ nodeA, nodeB }) {
           <RemoveBtn target={nodeA.Id} column={nodeA.column} />
         ) : null}
       </div>
-      <div className="h-1 relative">
+      <div className="h-1 relative flex-shrink-0">
         <button
           id="handle"
-          className="w-full h-1 absolute bottom-0 hover:cursor-row-resize"
+          className="w-full h-1 absolute bottom-0 flex-shrink-0 hover:cursor-row-resize"
           onMouseDown={startResize}
         >
           {}
