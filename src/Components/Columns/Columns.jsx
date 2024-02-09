@@ -54,7 +54,7 @@ export default function Columns({ nodeA, nodeB }) {
   return (
     <div
       id="wrapperForTwoColumns"
-      className="w-full h-full flex gap-0 flex-row-reverse relative"
+      className="w-full h-full flex gap-0 flex-row-reverse relative" // try justify-around or something like that
     >
       {drag.active && (
         <div
