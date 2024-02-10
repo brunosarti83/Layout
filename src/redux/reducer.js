@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { changeWidgetArray, splitTheNode } from "../layout";
+import { changeWidgetArray, deleteNode, getNode, splitTheNode } from "../layout";
 import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, REORDER } from "./actions";
 
 
@@ -8,32 +8,47 @@ const initialLayoutState = {
         id: String(Math.floor(Math.random()*10000)),
         content: [],
         column: true,
-        a: null,
-        b: null,
+        a: {
+            id: String(Math.floor(Math.random()*10000)),
+            content: [
+                {
+                    id: String(Math.floor(Math.random()*10000)),
+                    type: 'green'
+                }
+            ],
+            column: true,
+            a: null,
+            b: null,
+        },
+        b: {
+            id: String(Math.floor(Math.random()*10000)),
+            content: [
+                {
+                    id: String(Math.floor(Math.random()*10000)),
+                    type: 'green'
+                }
+            ],
+            column: true,
+            a: null,
+            b: null,
+        },
     }
 }
 
 export const rootReducer = (state=initialLayoutState, action) => {
     let layoutCopy;
+    let newState;
     let current;
     switch (action.type) {
         case ADD_TO_LAYOUT:
             layoutCopy = { ...state.map }
-            const newState = splitTheNode({ node: layoutCopy, ...action.payload })
-            console.log(newState)
+            newState = splitTheNode({ node: layoutCopy, ...action.payload })
             return { ...state, map: {...newState} }
 
         case REMOVE_FROM_LAYOUT:
             layoutCopy = { ...state.map };
-            current = layoutCopy;
-            while (current) {
-            if (current?.next?.id === action.payload) {
-                current.next = current.next.next;
-                break
-            }
-            current = current.next;
-            }
-            return { ...state, map: {...layoutCopy} }
+            newState = deleteNode({ node: layoutCopy, ...action.payload })
+            return { ...state, map: {...newState} }
         
         case ADD_WIDGET:
             const newWidget = {
@@ -41,20 +56,8 @@ export const rootReducer = (state=initialLayoutState, action) => {
                 type: action.payload.widgetType
             }
             layoutCopy = { ...state.map };
-            // check if add is on mainContent
-            if (action.payload.layoutId === 'main') {
-                layoutCopy.mainContent.push(newWidget)
-            } else {
-                // track the node that should hold the widget
-                current = layoutCopy;
-                while (current) {
-                if (current.id === action.payload.id) {
-                    current.insideContent.push(newWidget);
-                    break
-                }
-                current = current.next;
-                }
-            }
+            const node = getNode(layoutCopy, action.payload.id)
+            node.content.push(newWidget)   
             return { ...state, map: {...layoutCopy} }
 
         case REMOVE_WIDGET:

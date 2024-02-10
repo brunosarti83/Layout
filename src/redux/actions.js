@@ -13,10 +13,10 @@ export const addToLayout = (getId, columnOrRow) => {
     }
 }
 
-export const removeFromLayout = (id) => {
+export const removeFromLayout = (getId) => {
     return {
         type: REMOVE_FROM_LAYOUT,
-        payload: id
+        payload: { getId }
     }
 }
 

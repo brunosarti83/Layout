@@ -38,13 +38,13 @@ export default function Content({ map }) {
             !map.a ? (
               <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
                 <button
-                  onClick={() => dispatch(addWidget(nodeA.id, "purple"))}
+                  onClick={() => dispatch(addWidget(map.id, "purple"))}
                   className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
                 >
                   Purple
                 </button>
                 <button
-                  onClick={() => dispatch(addWidget(nodeA.id, "green"))}
+                  onClick={() => dispatch(addWidget(map.id, "green"))}
                   className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
                 >
                   Green

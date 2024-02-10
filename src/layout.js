@@ -41,6 +41,31 @@ export const splitTheNode = ({ node, getId, columnOrRow }) => {
     return node
 }
 
+export const getParentNode = (node, getId) => {
+    if (!node.a) return null
+    if (node.a.id === getId || node.b.id === getId) {
+       return node
+    }
+    const nodeA = getParentNode(node.a, getId)
+    if (nodeA) return nodeA
+    const nodeB = getParentNode(node.b, getId)
+    if (nodeB) return nodeB
+    return null
+}
+
+export const deleteNode = ({ node, getId }) => {
+    const parentNode = getParentNode(node, getId)
+    if (parentNode.a.id === getId) {
+        parentNode.content = [...parentNode.b.content]
+    } else {
+        parentNode.content = [...parentNode.a.content]
+    }
+    parentNode.column = getParentNode(node, parentNode.id)?.column || true
+    parentNode.a = null
+    parentNode.b = null
+    return node
+}
+
 export const changeWidgetArray = (source, destination, array) => {
     const widget = array[source.index]
     array.splice(source.index, 1)

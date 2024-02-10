@@ -18,14 +18,14 @@ export default function Columns({ nodeA, nodeB }) {
   });
 
   const boxStyle = {
-    width: dims.w ? `${dims.w}px` : '100%',
+    width: dims.w ? `${dims.w}px` : "100%",
   };
 
-  const refA = useRef(null)
+  const refA = useRef(null);
 
   useEffect(() => {
-    setDims({...dims, w: refA.current.parentElement.offsetWidth})
-  },[])
+    setDims({ ...dims, w: refA.current.parentElement.offsetWidth });
+  }, []);
 
   const startResize = (e) => {
     setDrag({
@@ -37,10 +37,9 @@ export default function Columns({ nodeA, nodeB }) {
   const resizeFrame = (e) => {
     const { active, x } = drag;
     if (active) {
-      const xDiff = Math.abs(x - e.clientX)*6;
-      const newW = x < e.clientX
-          ? Math.max(dims.w - xDiff, 150)
-          : dims.w + xDiff;
+      const xDiff = Math.abs(x - e.clientX) * 6;
+      const newW =
+        x < e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff;
 
       setDrag({ ...drag, x: e.clientX });
       setDims({ w: newW });
@@ -74,7 +73,7 @@ export default function Columns({ nodeA, nodeB }) {
       >
         <Unit map={nodeA} />
         {!nodeA.a ? (
-          <RemoveBtn target={nodeA.Id} column={nodeA.column} />
+          <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
         ) : null}
       </div>
       <div id="gap" className="w-1 relative flex-shrink-0">
@@ -93,7 +92,7 @@ export default function Columns({ nodeA, nodeB }) {
       >
         <Unit map={nodeB} />
         {!nodeB.a ? (
-          <RemoveBtn target={nodeB.Id} column={nodeB.column} />
+          <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
         ) : null}
       </div>
     </div>

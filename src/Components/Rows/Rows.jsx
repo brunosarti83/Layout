@@ -18,14 +18,14 @@ export default function Rows({ nodeA, nodeB }) {
   });
 
   const boxStyle = {
-    height: dims.h ? `${dims.h}px` : '100%'
+    height: dims.h ? `${dims.h}px` : "100%",
   };
 
-  const refA = useRef(null)
+  const refA = useRef(null);
 
   useEffect(() => {
-    setDims({...dims, h: refA.current.parentElement.offsetHeight})
-  }, [])
+    setDims({ ...dims, h: refA.current.parentElement.offsetHeight });
+  }, []);
 
   const startResize = (e) => {
     setDrag({
@@ -37,7 +37,7 @@ export default function Rows({ nodeA, nodeB }) {
   const resizeFrame = (e) => {
     const { active, y } = drag;
     if (active) {
-      const yDiff = Math.abs(y - e.clientY)*3;
+      const yDiff = Math.abs(y - e.clientY) * 3;
       const newH =
         y < e.clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 150);
 
@@ -54,14 +54,14 @@ export default function Rows({ nodeA, nodeB }) {
     <div
       id="wrapperForTwoRows"
       className="w-full h-full flex flex-col relative"
-      >
+    >
       {drag.active && (
         <div
-        onMouseMove={resizeFrame}
-        onMouseUp={stopResize}
-        className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
+          onMouseMove={resizeFrame}
+          onMouseUp={stopResize}
+          className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
         ></div>
-        )}
+      )}
       <div
         id="rowA"
         ref={refA}
@@ -72,7 +72,7 @@ export default function Rows({ nodeA, nodeB }) {
       >
         <Unit map={nodeA} />
         {!nodeA.a ? (
-          <RemoveBtn target={nodeA.Id} column={nodeA.column} />
+          <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
         ) : null}
       </div>
       <div className="h-1 relative flex-shrink-0">
@@ -91,7 +91,7 @@ export default function Rows({ nodeA, nodeB }) {
       >
         <Unit map={nodeB} />
         {!nodeB.a ? (
-          <RemoveBtn target={nodeB.Id} column={nodeB.column} />
+          <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
         ) : null}
       </div>
     </div>
