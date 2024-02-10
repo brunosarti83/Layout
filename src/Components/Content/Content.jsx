@@ -13,7 +13,6 @@ import { Droppable } from "react-beautiful-dnd";
 export default function Content({ map }) {
   const dispatch = useDispatch();
   return (
-    // <div className="flex w-full h-full relative overflow-y-hidden bg-slate-800 bg-opacity-5 rounded-md">
     <Droppable droppableId={map.id} type="widget">
       {(provided, snapshot) => (
         <div
@@ -57,6 +56,5 @@ export default function Content({ map }) {
         </div>
       )}
     </Droppable>
-    // </div>
   );
 }

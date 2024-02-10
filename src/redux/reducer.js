@@ -8,30 +8,8 @@ const initialLayoutState = {
         id: String(Math.floor(Math.random()*10000)),
         content: [],
         column: true,
-        a: {
-            id: String(Math.floor(Math.random()*10000)),
-            content: [
-                {
-                    id: String(Math.floor(Math.random()*10000)),
-                    type: 'green'
-                }
-            ],
-            column: true,
-            a: null,
-            b: null,
-        },
-        b: {
-            id: String(Math.floor(Math.random()*10000)),
-            content: [
-                {
-                    id: String(Math.floor(Math.random()*10000)),
-                    type: 'green'
-                }
-            ],
-            column: true,
-            a: null,
-            b: null,
-        },
+        a: null,
+        b: null
     }
 }
 
