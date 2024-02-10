@@ -56,26 +56,16 @@ export const rootReducer = (state=initialLayoutState, action) => {
                 type: action.payload.widgetType
             }
             layoutCopy = { ...state.map };
-            const node = getNode(layoutCopy, action.payload.id)
-            node.content.push(newWidget)   
+            const nodeAdd = getNode(layoutCopy, action.payload.id)
+            nodeAdd.content.push(newWidget)   
             return { ...state, map: {...layoutCopy} }
 
         case REMOVE_WIDGET:
+            const { layoutId, widgetId } = action.payload
             layoutCopy = { ...state.map };
-            // check if delete is from mainContent
-            if (action.payload.layoutId === 'main') {
-                layoutCopy.mainContent = layoutCopy.mainContent.filter(widget => widget.id !== action.payload.widgetId);
-            } else {
-                // track the node holding the widget and delete it
-                current = layoutCopy;
-                while (current) {
-                if (current.id === action.payload.layoutId) {
-                    current.insideContent = current.insideContent.filter(widget => widget.id !== action.payload.widgetId);
-                    break
-                }
-                current = current.next;
-                }
-            }
+            const nodeDel = getNode(layoutCopy, layoutId)
+            const filteredContent = nodeDel.content.filter((widget) => widget.id !== widgetId)
+            nodeDel.content = filteredContent
             return { ...state, map: {...layoutCopy} }
 
         case REORDER:
