@@ -90,7 +90,9 @@ export default function Columns({ nodeA, nodeB }) {
           !nodeB.a && "bg-slate-800 bg-opacity-5"
         } rounded-md`}
       >
-        <Unit map={nodeB} />
+        <div className="overflow-hidden">
+          <Unit map={nodeB} />
+        </div>
         {!nodeB.a ? (
           <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
         ) : null}

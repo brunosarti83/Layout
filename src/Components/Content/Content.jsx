@@ -19,7 +19,7 @@ export default function Content({ map }) {
         <div
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className="flex flex-col gap-2 p-2 w-full h-full"
+          className={`flex ${map.column && "flex-col"} gap-2 p-2 w-full h-full`}
         >
           <div className="absolute top-2 right-0 m-[2px] z-50">
             <AddButtons id={map.id} />

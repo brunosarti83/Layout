@@ -11,7 +11,7 @@ export default function RemoveBtn({ targetId, column }) {
     <>
       {column ? (
         <div
-          className="w-full mt-auto h-[25px] overflow-hidden relative"
+          className="w-full mt-auto h-[25px] overflow-hidden relative flex-shrink-0"
           onMouseEnter={() => setShowRemove(true)}
           onMouseLeave={() => setShowRemove(false)}
         >
@@ -29,7 +29,7 @@ export default function RemoveBtn({ targetId, column }) {
         </div>
       ) : (
         <div
-          className="ml-auto h-full w-[25px] overflow-hidden relative"
+          className="ml-auto h-full w-[25px] overflow-hidden relative flex-shrink-0"
           onMouseEnter={() => setShowRemove(true)}
           onMouseLeave={() => setShowRemove(false)}
         >

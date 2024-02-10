@@ -6,7 +6,7 @@ import Rows from "../Rows/Rows";
 
 export default function Unit({ map }) {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full overflow-auto">
       {!map.a ? (
         <Content map={map} />
       ) : map?.column ? (
