@@ -4,10 +4,16 @@
 import Unit from "../Unit/Unit";
 // hooks and tools
 import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 // minor components
 import RemoveBtn from "../RemoveBtn/RemoveBtn";
+import DropAreaRow from "../DropAreaRow/DropAreaRow";
+import DropAreaColumn from "../DropAreaColumn/DropAreaColumn";
+import { setDragging } from "../../redux/actions";
 
 export default function Columns({ nodeA, nodeB }) {
+  const dispatch = useDispatch();
+
   const [drag, setDrag] = useState({
     active: false,
     x: "",
@@ -50,20 +56,25 @@ export default function Columns({ nodeA, nodeB }) {
     setDrag({ ...drag, active: false });
   };
 
+  const startColumnDrag = () => {
+    dispatch(setDragging(true));
+  };
+
   return (
     <div
       id="wrapperForTwoColumns"
-      className="w-full h-full flex gap-0 flex-row-reverse relative" // try justify-around or something like that
+      className="w-full h-full flex gap-0 flex-row-reverse relative"
     >
       {drag.active && (
         <div
-          id="dragCover"
+          id="resizeCover"
           onMouseMove={resizeFrame}
           onMouseUp={stopResize}
           className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
         ></div>
       )}
       <div
+        draggable
         id="columnA"
         ref={refA}
         className={`rounded-md flex flex-col h-full relative overflow-x-hidden ${
@@ -71,10 +82,18 @@ export default function Columns({ nodeA, nodeB }) {
         }`}
         style={boxStyle}
       >
-        <Unit map={nodeA} />
-        {!nodeA.a ? (
-          <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
-        ) : null}
+        <DropAreaRow />
+        <div className="flex h-full w-full gap-0">
+          <DropAreaColumn />
+          <div className="flex flex-col gap-0 h-full w-full relative overflow-x-hidden">
+            <Unit map={nodeA} />
+            {!nodeA.a ? (
+              <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
+            ) : null}
+          </div>
+          <DropAreaColumn />
+        </div>
+        <DropAreaRow />
       </div>
       <div id="gap" className="w-1 relative flex-shrink-0">
         <button
@@ -86,14 +105,23 @@ export default function Columns({ nodeA, nodeB }) {
         </button>
       </div>
       <div
+        draggable
         className={`flex flex-col w-full h-full relative overflow-x-hidden ${
           !nodeB.a && "bg-slate-800 bg-opacity-5"
         } rounded-md`}
       >
-        <Unit map={nodeB} />
-        {!nodeB.a ? (
-          <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
-        ) : null}
+        <DropAreaRow />
+        <div className="flex h-full w-full gap-0">
+          <DropAreaColumn />
+          <div className="flex flex-col gap-0 h-full w-full relative overflow-x-hidden">
+            <Unit map={nodeB} />
+            {!nodeB.a ? (
+              <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
+            ) : null}
+          </div>
+          <DropAreaColumn />
+        </div>
+        <DropAreaRow />
       </div>
     </div>
   );

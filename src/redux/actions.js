@@ -4,6 +4,7 @@ export const REMOVE_FROM_LAYOUT = 'REMOVE_FROM_LAYOUT'
 export const ADD_WIDGET = 'ADD_WIDGET'
 export const REMOVE_WIDGET = 'REMOVE_WIDGET'
 export const REORDER = 'REORDER'
+export const SET_DRAG = 'SET_DRAG'
 
 
 export const addToLayout = (getId, columnOrRow) => {
@@ -38,5 +39,12 @@ export const reorder = (result) => {
     return {
         type: REORDER,
         payload: result
+    }
+}
+
+export const setDragging = (dragging) => {
+    return {
+        type: SET_DRAG,
+        payload: dragging
     }
 }

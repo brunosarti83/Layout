@@ -53,7 +53,7 @@ export default function Rows({ nodeA, nodeB }) {
   return (
     <div
       id="wrapperForTwoRows"
-      className="w-full h-full flex flex-col relative"
+      className="w-full h-full flex flex-col relative gap-0"
     >
       {drag.active && (
         <div
@@ -63,6 +63,7 @@ export default function Rows({ nodeA, nodeB }) {
         ></div>
       )}
       <div
+        draggable
         id="rowA"
         ref={refA}
         className={`${

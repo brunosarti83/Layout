@@ -22,7 +22,7 @@ export default function Layout({ map }) {
   };
 
   return (
-    <div className="bg-gray-50 h-[100dvh] w-full flex relative overflow-auto py-4">
+    <div className="bg-gray-50 h-[100dvh] w-full flex relative py-4">
       <DragDropContext onDragEnd={handleDragEnd}>
         <Unit map={map} />
       </DragDropContext>
