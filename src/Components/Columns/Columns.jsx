@@ -24,13 +24,13 @@ export default function Columns({ nodeA, nodeB }) {
   });
 
   const boxStyle = {
-    width: dims.w ? `${dims.w}px` : "100%",
+    width: dims.w ? `${dims.w}px` : "50%",
   };
 
   const refA = useRef(null);
 
   useEffect(() => {
-    setDims({ ...dims, w: refA.current.parentElement.offsetWidth });
+    setDims({ ...dims, w: refA.current.parentElement.offsetWidth / 2 });
   }, []);
 
   const startResize = (e) => {
@@ -62,67 +62,63 @@ export default function Columns({ nodeA, nodeB }) {
 
   return (
     <div
-      id="wrapperForTwoColumns"
-      className="w-full h-full flex gap-0 flex-row-reverse relative"
+      id="wrapperForDropAreasAroundColumns"
+      className="w-full h-full flex flex-col gap-0"
     >
-      {drag.active && (
+      <DropAreaRow />
+      <div className="w-full h-full flex gap-0">
+        <DropAreaColumn />
         <div
-          id="resizeCover"
-          onMouseMove={resizeFrame}
-          onMouseUp={stopResize}
-          className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
-        ></div>
-      )}
-      <div
-        draggable
-        id="columnA"
-        ref={refA}
-        className={`rounded-md flex flex-col h-full relative overflow-x-hidden ${
-          !nodeA.a && "bg-slate-800 bg-opacity-5"
-        }`}
-        style={boxStyle}
-      >
-        <DropAreaRow />
-        <div className="flex h-full w-full gap-0">
-          <DropAreaColumn />
-          <div className="flex flex-col gap-0 h-full w-full relative overflow-x-hidden">
+          id="wrapperForTwoColumns"
+          className="w-full h-full flex gap-0 flex-row-reverse relative"
+        >
+          {drag.active && (
+            <div
+              id="resizeCover"
+              onMouseMove={resizeFrame}
+              onMouseUp={stopResize}
+              className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
+            ></div>
+          )}
+          <div
+            draggable
+            id="columnA"
+            ref={refA}
+            className={`rounded-md flex flex-col h-full relative overflow-x-hidden ${
+              !nodeA.a && "bg-slate-800 bg-opacity-5"
+            }`}
+            style={boxStyle}
+          >
             <Unit map={nodeA} />
             {!nodeA.a ? (
               <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
             ) : null}
           </div>
-          <DropAreaColumn />
-        </div>
-        <DropAreaRow />
-      </div>
-      <div id="gap" className="w-1 relative flex-shrink-0">
-        <button
-          id="handle"
-          className="w-1 h-full absolute hover:cursor-col-resize flex-shrink-0"
-          onMouseDown={startResize}
-        >
-          {}
-        </button>
-      </div>
-      <div
-        draggable
-        className={`flex flex-col w-full h-full relative overflow-x-hidden ${
-          !nodeB.a && "bg-slate-800 bg-opacity-5"
-        } rounded-md`}
-      >
-        <DropAreaRow />
-        <div className="flex h-full w-full gap-0">
-          <DropAreaColumn />
-          <div className="flex flex-col gap-0 h-full w-full relative overflow-x-hidden">
+          <div id="gap" className="w-1 relative shrink-0">
+            <button
+              id="handle"
+              className="w-1 h-full absolute hover:cursor-col-resize shrink-0"
+              onMouseDown={startResize}
+            >
+              {}
+            </button>
+          </div>
+          <div
+            draggable
+            className={`flex flex-col h-full relative overflow-x-hidden ${
+              !nodeB.a && "bg-slate-800 bg-opacity-5"
+            } rounded-md`}
+            style={{ width: `calc(100% - ${dims.w}px)` }}
+          >
             <Unit map={nodeB} />
             {!nodeB.a ? (
               <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
             ) : null}
           </div>
-          <DropAreaColumn />
         </div>
-        <DropAreaRow />
+        <DropAreaColumn />
       </div>
+      <DropAreaRow />
     </div>
   );
 }

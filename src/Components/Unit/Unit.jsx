@@ -7,8 +7,7 @@ import DropAreaRow from "../DropAreaRow/DropAreaRow";
 
 export default function Unit({ map }) {
   return (
-    <div className="w-full h-full overflow-auto flex flex-col gap-0">
-      <DropAreaRow />
+    <div className="w-full h-full overflow-auto">
       {!map.a ? (
         <Content map={map} />
       ) : map?.column ? (
@@ -16,7 +15,6 @@ export default function Unit({ map }) {
       ) : (
         <Rows nodeA={map.a} nodeB={map.b} />
       )}
-      <DropAreaRow />
     </div>
   );
 }
