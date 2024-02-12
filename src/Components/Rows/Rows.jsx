@@ -18,13 +18,13 @@ export default function Rows({ nodeA, nodeB }) {
   });
 
   const boxStyle = {
-    height: dims.h ? `${dims.h}px` : "100%",
+    height: dims.h ? `${dims.h}px` : "50%",
   };
 
   const refA = useRef(null);
 
   useEffect(() => {
-    setDims({ ...dims, h: refA.current.parentElement.offsetHeight });
+    setDims({ ...dims, h: refA.current.parentElement.offsetHeight / 2 });
   }, []);
 
   const startResize = (e) => {
@@ -37,7 +37,7 @@ export default function Rows({ nodeA, nodeB }) {
   const resizeFrame = (e) => {
     const { active, y } = drag;
     if (active) {
-      const yDiff = Math.abs(y - e.clientY) * 3;
+      const yDiff = Math.abs(y - e.clientY);
       const newH =
         y < e.clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 150);
 
@@ -89,6 +89,7 @@ export default function Rows({ nodeA, nodeB }) {
         className={`flex w-full h-full relative overflow-y-hidden ${
           !nodeB.a && "bg-slate-800 bg-opacity-5"
         } rounded-md`}
+        style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
       >
         <Unit map={nodeB} />
         {!nodeB.a ? (

@@ -43,7 +43,7 @@ export default function Columns({ nodeA, nodeB }) {
   const resizeFrame = (e) => {
     const { active, x } = drag;
     if (active) {
-      const xDiff = Math.abs(x - e.clientX) * 6;
+      const xDiff = Math.abs(x - e.clientX);
       const newW =
         x < e.clientX ? Math.max(dims.w - xDiff, 150) : dims.w + xDiff;
 
@@ -108,7 +108,7 @@ export default function Columns({ nodeA, nodeB }) {
             className={`flex flex-col h-full relative overflow-x-hidden ${
               !nodeB.a && "bg-slate-800 bg-opacity-5"
             } rounded-md`}
-            style={{ width: `calc(100% - ${dims.w}px)` }}
+            style={{ width: `calc(100% - ${dims.w}px)`, minWidth: 150 }}
           >
             <Unit map={nodeB} />
             {!nodeB.a ? (
