@@ -6,6 +6,8 @@ import Unit from "../Unit/Unit";
 import { useEffect, useState, useRef } from "react";
 // minor components
 import RemoveBtn from "../RemoveBtn/RemoveBtn";
+import DropAreaRow from "../DropAreaRow/DropAreaRow";
+import DropAreaColumn from "../DropAreaColumn/DropAreaColumn";
 
 export default function Rows({ nodeA, nodeB }) {
   const [drag, setDrag] = useState({
@@ -52,50 +54,61 @@ export default function Rows({ nodeA, nodeB }) {
 
   return (
     <div
-      id="wrapperForTwoRows"
-      className="w-full h-full flex flex-col relative gap-0"
+      id="wrapperForDropAreasAroundRows"
+      className="w-full h-full flex flex-col gap-0"
     >
-      {drag.active && (
+      <DropAreaRow />
+      <div className="w-full h-full flex gap-0">
+        <DropAreaColumn />
         <div
-          onMouseMove={resizeFrame}
-          onMouseUp={stopResize}
-          className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
-        ></div>
-      )}
-      <div
-        draggable
-        id="rowA"
-        ref={refA}
-        className={`${
-          !nodeA.a && "bg-slate-800 bg-opacity-5"
-        } flex w-full rounded-md relative overflow-y-hidden`}
-        style={boxStyle}
-      >
-        <Unit map={nodeA} />
-        {!nodeA.a ? (
-          <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
-        ) : null}
-      </div>
-      <div className="h-1 relative flex-shrink-0">
-        <button
-          id="handle"
-          className="w-full h-1 absolute bottom-0 flex-shrink-0 hover:cursor-row-resize"
-          onMouseDown={startResize}
+          id="wrapperForTwoRows"
+          className="w-full h-full flex flex-col relative gap-0"
         >
-          {}
-        </button>
+          {drag.active && (
+            <div
+              onMouseMove={resizeFrame}
+              onMouseUp={stopResize}
+              className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
+            ></div>
+          )}
+          <div
+            draggable
+            id="rowA"
+            ref={refA}
+            className={`${
+              !nodeA.a && "bg-slate-800 bg-opacity-5"
+            } flex w-full rounded-md relative overflow-y-hidden`}
+            style={boxStyle}
+          >
+            <Unit map={nodeA} />
+            {!nodeA.a ? (
+              <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
+            ) : null}
+          </div>
+          <div className="h-1 relative flex-shrink-0">
+            <button
+              id="handle"
+              className="w-full h-1 absolute bottom-0 flex-shrink-0 hover:cursor-row-resize"
+              onMouseDown={startResize}
+            >
+              {}
+            </button>
+          </div>
+          <div
+            className={`flex w-full h-full relative overflow-y-hidden ${
+              !nodeB.a && "bg-slate-800 bg-opacity-5"
+            } rounded-md`}
+            style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
+          >
+            <Unit map={nodeB} />
+            {!nodeB.a ? (
+              <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
+            ) : null}
+          </div>
+        </div>
+        <DropAreaColumn />
       </div>
-      <div
-        className={`flex w-full h-full relative overflow-y-hidden ${
-          !nodeB.a && "bg-slate-800 bg-opacity-5"
-        } rounded-md`}
-        style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
-      >
-        <Unit map={nodeB} />
-        {!nodeB.a ? (
-          <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
-        ) : null}
-      </div>
+      <DropAreaRow />
     </div>
   );
 }
