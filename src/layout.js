@@ -54,15 +54,21 @@ export const getParentNode = (node, getId) => {
 }
 
 export const deleteNode = ({ node, getId }) => {
+    // get the parent node
     const parentNode = getParentNode(node, getId)
+    // pass the content of remaining node to parent
     if (parentNode.a.id === getId) {
         parentNode.content = [...parentNode.b.content]
     } else {
         parentNode.content = [...parentNode.a.content]
     }
-    parentNode.column = getParentNode(node, parentNode.id)?.column || true
+    // get granPa node to set appropiate column to the now displaying node
+    const granPaNode = getParentNode(node, parentNode.id)
+    parentNode.column = granPaNode ? granPaNode.column : true
+    // delete previous nodes
     parentNode.a = null
     parentNode.b = null
+    // return the  new tree
     return node
 }
 
