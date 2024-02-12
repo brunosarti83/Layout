@@ -5,8 +5,7 @@ import Unit from "../Unit/Unit";
 // hooks and tools
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-// minor components
-import RemoveBtn from "../RemoveBtn/RemoveBtn";
+// actions
 import { setDragging } from "../../redux/actions";
 
 export default function Columns({ nodeA, nodeB }) {
@@ -75,15 +74,12 @@ export default function Columns({ nodeA, nodeB }) {
         draggable
         id="columnA"
         ref={refA}
-        className={`rounded-md flex flex-col h-full relative overflow-x-hidden ${
+        className={`rounded-md h-full relative overflow-x-hidden ${
           !nodeA.a && "bg-slate-800 bg-opacity-5"
         }`}
         style={boxStyle}
       >
         <Unit map={nodeA} />
-        {!nodeA.a ? (
-          <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
-        ) : null}
       </div>
       <div id="gap" className="w-1 relative shrink-0">
         <button
@@ -96,15 +92,12 @@ export default function Columns({ nodeA, nodeB }) {
       </div>
       <div
         draggable
-        className={`flex flex-col h-full relative overflow-x-hidden ${
+        className={`h-full relative overflow-x-hidden ${
           !nodeB.a && "bg-slate-800 bg-opacity-5"
         } rounded-md`}
         style={{ width: `calc(100% - ${dims.w}px)`, minWidth: 150 }}
       >
         <Unit map={nodeB} />
-        {!nodeB.a ? (
-          <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
-        ) : null}
       </div>
     </div>
   );

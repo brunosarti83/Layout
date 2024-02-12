@@ -38,6 +38,7 @@ export const splitTheNode = ({ node, getId, columnOrRow }) => {
     toSplit.content = []
     toSplit.a = nodeA
     toSplit.b = nodeB
+
     return node
 }
 
@@ -56,19 +57,28 @@ export const getParentNode = (node, getId) => {
 export const deleteNode = ({ node, getId }) => {
     // get the parent node
     const parentNode = getParentNode(node, getId)
-    // pass the content of remaining node to parent
+    // check wich node is target
     if (parentNode.a.id === getId) {
-        parentNode.content = [...parentNode.b.content]
+        if (!parentNode.b.a) {
+            const granPaNode = getParentNode(node, parentNode.id)
+            parentNode.column = granPaNode ? granPaNode.column : true
+            parentNode.content = parentNode.b.content
+        } else {
+            parentNode.column = parentNode.b.column
+        }
+        parentNode.a = parentNode.b.a
+        parentNode.b = parentNode.b.b
     } else {
-        parentNode.content = [...parentNode.a.content]
+        if (!parentNode.a.a) {
+            const granPaNode = getParentNode(node, parentNode.id)
+            parentNode.column = granPaNode ? granPaNode.column : true
+            parentNode.content = parentNode.a.content
+        } else {
+            parentNode.column = parentNode.a.column
+        }
+        parentNode.b = parentNode.a.b
+        parentNode.a = parentNode.a.a
     }
-    // get granPa node to set appropiate column to the now displaying node
-    const granPaNode = getParentNode(node, parentNode.id)
-    parentNode.column = granPaNode ? granPaNode.column : true
-    // delete previous nodes
-    parentNode.a = null
-    parentNode.b = null
-    // return the  new tree
     return node
 }
 

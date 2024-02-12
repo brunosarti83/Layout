@@ -4,8 +4,6 @@
 import Unit from "../Unit/Unit";
 // hooks and tools
 import { useEffect, useState, useRef } from "react";
-// minor components
-import RemoveBtn from "../RemoveBtn/RemoveBtn";
 
 export default function Rows({ nodeA, nodeB }) {
   const [drag, setDrag] = useState({
@@ -68,13 +66,10 @@ export default function Rows({ nodeA, nodeB }) {
         ref={refA}
         className={`${
           !nodeA.a && "bg-slate-800 bg-opacity-5"
-        } flex w-full rounded-md relative overflow-y-hidden`}
+        } w-full rounded-md relative overflow-y-hidden`}
         style={boxStyle}
       >
         <Unit map={nodeA} />
-        {!nodeA.a ? (
-          <RemoveBtn targetId={nodeA.id} column={nodeA.column} />
-        ) : null}
       </div>
       <div className="h-1 relative flex-shrink-0">
         <button
@@ -86,15 +81,12 @@ export default function Rows({ nodeA, nodeB }) {
         </button>
       </div>
       <div
-        className={`flex w-full h-full relative overflow-y-hidden ${
+        className={`w-full h-full relative overflow-y-hidden ${
           !nodeB.a && "bg-slate-800 bg-opacity-5"
         } rounded-md`}
         style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
       >
         <Unit map={nodeB} />
-        {!nodeB.a ? (
-          <RemoveBtn targetId={nodeB.id} column={nodeB.column} />
-        ) : null}
       </div>
     </div>
   );
