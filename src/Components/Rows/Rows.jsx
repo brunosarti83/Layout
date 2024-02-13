@@ -53,8 +53,8 @@ export default function Rows({ nodeA, nodeB }) {
     setDrag({ ...drag, active: false });
   };
 
-  const startDrag = (id) => {
-    dispatch(setDragging(id));
+  const startDrag = (flag, id) => {
+    flag && dispatch(setDragging(id));
   };
 
   const endDrag = () => {
@@ -75,7 +75,7 @@ export default function Rows({ nodeA, nodeB }) {
       )}
       <div
         draggable={nodeA.a ? "false" : "true"}
-        onDragStart={() => startDrag(nodeA.id)}
+        onDragStart={() => startDrag(!nodeA.a, nodeA.id)}
         onDragEnd={endDrag}
         id="rowA"
         ref={refA}
@@ -95,7 +95,7 @@ export default function Rows({ nodeA, nodeB }) {
       </div>
       <div
         draggable={nodeB.a ? "false" : "true"}
-        onDragStart={() => startDrag(nodeB.id)}
+        onDragStart={() => startDrag(!nodeB.a, nodeB.id)}
         onDragEnd={endDrag}
         className="flex w-full h-full relative overflow-y-hidden rounded-md"
         style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
