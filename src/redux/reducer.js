@@ -1,12 +1,10 @@
 /* eslint-disable no-case-declarations */
-import { changeWidgetArray, deleteNode, getNode, splitTheNode } from "../layout";
+import { changeWidgetArray, deleteNode, getNode, reorderLayout, splitTheNode } from "../layout";
 import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, REORDER_WIDGETS, SET_DRAG, CHANGE_LAYOUT } from "./actions";
 
 
 const initialLayoutState = {
-    isDragging: false,
-    draggingId: null,
-    targetId: null,
+    isDragging: null,
     map: {
         id: String(Math.floor(Math.random()*10000)),
         content: [],
@@ -71,10 +69,17 @@ export const rootReducer = (state=initialLayoutState, action) => {
             return state
 
         case SET_DRAG:
+            console.log(action.payload)
             return { ...state, isDragging: action.payload}
         
         case CHANGE_LAYOUT:
-            return state
+            const { dropId, position, dragId } = action.payload
+            if (dragId === dropId) {
+                return state
+            }
+            layoutCopy = { ...state.map };
+            newState = reorderLayout(layoutCopy, dropId, position, dragId)
+            return { ...state, map: {...newState}}
 
         default:
             return state

@@ -50,9 +50,9 @@ export const setDragging = (dragging) => {
     }
 }
 
-export const changeLayout = () => {
+export const changeLayout = (dropId, position, dragId) => {
     return {
         type: CHANGE_LAYOUT,
-        payload: ""
+        payload: { dropId, position, dragId }
     }
 }

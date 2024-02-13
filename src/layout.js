@@ -38,7 +38,7 @@ export const splitTheNode = ({ node, getId, columnOrRow }) => {
     toSplit.content = []
     toSplit.a = nodeA
     toSplit.b = nodeB
-
+    console.log(node)
     return node
 }
 
@@ -87,4 +87,25 @@ export const changeWidgetArray = (source, destination, array) => {
     array.splice(source.index, 1)
     array.splice(destination.index, 0, widget)
     return array
+}
+
+export const reorderLayout = (tree, dropId, position, dragId) => {
+    console.log(dropId, position, dragId)
+    const dropNode = getNode(tree, dropId)
+    const dragNode = getNode(tree, dragId)
+    const column = position === 'left' || position === 'right'
+    dropNode.column = column
+    let nodeA;
+    let nodeB;
+    if (position === 'top' || position === 'right') {
+        nodeA = {...dragNode, id: '0004', column: column}
+        nodeB = {...dropNode, id: '0005', column: column}
+    } else {
+        nodeB = {...dragNode, id: '0004', column: column}
+        nodeA = {...dropNode, id: '0005', column: column}
+    }
+    dropNode.a = nodeA
+    dropNode.b = nodeB
+    const newTree = deleteNode({node:tree, getId:dragId})
+    return newTree
 }

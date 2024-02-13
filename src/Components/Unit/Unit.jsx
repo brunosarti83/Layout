@@ -9,17 +9,17 @@ export default function Unit({ map }) {
   return (
     <div className="w-full h-full overflow-auto">
       {!map.a ? (
-        <WrapperForDropAreas>
+        <WrapperForDropAreas mapId={map.id}>
           <div className="h-full w-full bg-slate-800 bg-opacity-5">
             <Content map={map} />
           </div>
         </WrapperForDropAreas>
       ) : map?.column ? (
-        <WrapperForDropAreas>
+        <WrapperForDropAreas mapId={map.id}>
           <Columns nodeA={map.a} nodeB={map.b} />
         </WrapperForDropAreas>
       ) : (
-        <WrapperForDropAreas>
+        <WrapperForDropAreas mapId={map.id}>
           <Rows nodeA={map.a} nodeB={map.b} />
         </WrapperForDropAreas>
       )}

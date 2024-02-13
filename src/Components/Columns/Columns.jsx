@@ -53,12 +53,12 @@ export default function Columns({ nodeA, nodeB }) {
     setDrag({ ...drag, active: false });
   };
 
-  const startDrag = () => {
-    dispatch(setDragging(true));
+  const startDrag = (flag, id) => {
+    flag && dispatch(setDragging(id));
   };
 
   const endDrag = () => {
-    dispatch(setDragging(false));
+    dispatch(setDragging(null));
   };
 
   return (
@@ -75,8 +75,8 @@ export default function Columns({ nodeA, nodeB }) {
         ></div>
       )}
       <div
-        draggable={nodeA.a ? false : true}
-        onDragStart={startDrag}
+        draggable={nodeA.a ? "false" : "true"}
+        onDragStart={() => startDrag(!nodeA.a, nodeA.id)}
         onDragEnd={endDrag}
         id="columnA"
         ref={refA}
@@ -95,8 +95,8 @@ export default function Columns({ nodeA, nodeB }) {
         </button>
       </div>
       <div
-        draggable={nodeB.a ? false : true}
-        onDragStart={startDrag}
+        draggable={nodeB.a ? "false" : "true"}
+        onDragStart={() => startDrag(!nodeB.a, nodeB.id)}
         onDragEnd={endDrag}
         className="flex flex-col gap-0 h-full relative overflow-x-hidden rounded-md"
         style={{ width: `calc(100% - ${dims.w}px)`, minWidth: 150 }}
