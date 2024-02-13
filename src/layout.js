@@ -38,7 +38,6 @@ export const splitTheNode = ({ node, getId, columnOrRow }) => {
     toSplit.content = []
     toSplit.a = nodeA
     toSplit.b = nodeB
-    console.log(node)
     return node
 }
 
@@ -90,7 +89,6 @@ export const changeWidgetArray = (source, destination, array) => {
 }
 
 export const reorderLayout = (tree, dropId, position, dragId) => {
-    console.log(dropId, position, dragId)
     const dropNode = getNode(tree, dropId)
     const dragNode = getNode(tree, dragId)
     const column = position === 'left' || position === 'right'
