@@ -98,11 +98,11 @@ export const reorderLayout = (tree, dropId, position, dragId) => {
     let nodeA;
     let nodeB;
     if (position === 'top' || position === 'right') {
-        nodeA = {...dragNode, id: '0004', column: column}
-        nodeB = {...dropNode, id: '0005', column: column}
+        nodeA = {...dragNode, id: String(Math.floor(Math.random()*10000)), column: column}
+        nodeB = {...dropNode, id: String(Math.floor(Math.random()*10000)), column: column}
     } else {
-        nodeB = {...dragNode, id: '0004', column: column}
-        nodeA = {...dropNode, id: '0005', column: column}
+        nodeB = {...dragNode, id: String(Math.floor(Math.random()*10000)), column: column}
+        nodeA = {...dropNode, id: String(Math.floor(Math.random()*10000)), column: column}
     }
     dropNode.a = nodeA
     dropNode.b = nodeB

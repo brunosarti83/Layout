@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // actions
-import { changeLayout } from "../../redux/actions";
+import { changeLayout, setDragging } from "../../redux/actions";
 
 export default function DropAreaRow({ mapId, position }) {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ export default function DropAreaRow({ mapId, position }) {
   const onDropRowOrCol = () => {
     dispatch(changeLayout(mapId, position, isDragging));
     setIsVisible(false);
+    dispatch(setDragging(null));
   };
 
   return (
