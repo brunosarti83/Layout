@@ -4,8 +4,13 @@
 import Unit from "../Unit/Unit";
 // hooks and tools
 import { useEffect, useState, useRef } from "react";
+import { useDispatch } from "react-redux";
+// actions
+import { setDragging } from "../../redux/actions";
 
 export default function Rows({ nodeA, nodeB }) {
+  const dispatch = useDispatch();
+
   const [drag, setDrag] = useState({
     active: false,
     y: "",
@@ -48,6 +53,14 @@ export default function Rows({ nodeA, nodeB }) {
     setDrag({ ...drag, active: false });
   };
 
+  const startDrag = () => {
+    dispatch(setDragging(true));
+  };
+
+  const endDrag = () => {
+    dispatch(setDragging(false));
+  };
+
   return (
     <div
       id="wrapperForTwoRows"
@@ -61,12 +74,12 @@ export default function Rows({ nodeA, nodeB }) {
         ></div>
       )}
       <div
-        draggable
+        draggable={nodeA.a ? false : true}
+        onDragStart={startDrag}
+        onDragEnd={endDrag}
         id="rowA"
         ref={refA}
-        className={`${
-          !nodeA.a && "bg-slate-800 bg-opacity-5"
-        } w-full rounded-md relative overflow-y-hidden`}
+        className="flex w-full rounded-md relative overflow-y-hidden"
         style={boxStyle}
       >
         <Unit map={nodeA} />
@@ -81,9 +94,10 @@ export default function Rows({ nodeA, nodeB }) {
         </button>
       </div>
       <div
-        className={`w-full h-full relative overflow-y-hidden ${
-          !nodeB.a && "bg-slate-800 bg-opacity-5"
-        } rounded-md`}
+        draggable={nodeB.a ? false : true}
+        onDragStart={startDrag}
+        onDragEnd={endDrag}
+        className="flex w-full h-full relative overflow-y-hidden rounded-md"
         style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
       >
         <Unit map={nodeB} />

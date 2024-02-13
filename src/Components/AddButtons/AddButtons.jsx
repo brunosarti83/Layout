@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { addToLayout } from "../../redux/actions";
+import { addToLayout, removeFromLayout } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { VscSplitHorizontal } from "react-icons/vsc";
 import { VscSplitVertical } from "react-icons/vsc";
+import { VscChromeClose } from "react-icons/vsc";
 
 export default function AddButtons({ id }) {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export default function AddButtons({ id }) {
 
   return (
     <div
-      className="w-[60px] h-[40px] flex bg-gradient-to-tr from-gray-100/10 to-gray-150/15 drop-shadow-md overflow-hidden relative rounded-[10px]"
+      className="w-[90px] h-[40px] flex bg-gradient-to-tr from-gray-100/10 to-gray-150/15 drop-shadow-md overflow-hidden relative rounded-[10px]"
       onMouseEnter={() => setShowAdd(true)}
       onMouseLeave={() => setShowAdd(false)}
     >
@@ -31,6 +32,12 @@ export default function AddButtons({ id }) {
           className="bg-sky-500/5 h-full w-[25px] rounded-[5px] text-center align-middle"
         >
           <VscSplitHorizontal className="mx-auto text-lg text-gray-500" />
+        </button>
+        <button
+          onClick={() => dispatch(removeFromLayout(id))}
+          className="bg-sky-500/5 h-full w-[25px] rounded-[5px] text-center align-middle"
+        >
+          <VscChromeClose className="mx-auto text-lg text-gray-500" />
         </button>
       </div>
     </div>

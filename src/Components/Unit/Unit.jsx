@@ -4,18 +4,14 @@ import Content from "../Content/Content";
 import Columns from "../Columns/Columns";
 import Rows from "../Rows/Rows";
 import WrapperForDropAreas from "../WrapperForDropAreas/WrapperForDropAreas";
-import RemoveBtn from "../RemoveBtn/RemoveBtn";
 
 export default function Unit({ map }) {
   return (
     <div className="w-full h-full overflow-auto">
       {!map.a ? (
         <WrapperForDropAreas>
-          <div
-            className={`w-full h-full flex ${map.column && "flex-col"} gap-0`}
-          >
+          <div className="h-full w-full bg-slate-800 bg-opacity-5">
             <Content map={map} />
-            <RemoveBtn targetId={map.id} column={map.column} />
           </div>
         </WrapperForDropAreas>
       ) : map?.column ? (

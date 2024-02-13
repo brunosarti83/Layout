@@ -53,8 +53,12 @@ export default function Columns({ nodeA, nodeB }) {
     setDrag({ ...drag, active: false });
   };
 
-  const startColumnDrag = () => {
+  const startDrag = () => {
     dispatch(setDragging(true));
+  };
+
+  const endDrag = () => {
+    dispatch(setDragging(false));
   };
 
   return (
@@ -71,12 +75,12 @@ export default function Columns({ nodeA, nodeB }) {
         ></div>
       )}
       <div
-        draggable
+        draggable={nodeA.a ? false : true}
+        onDragStart={startDrag}
+        onDragEnd={endDrag}
         id="columnA"
         ref={refA}
-        className={`rounded-md h-full relative overflow-x-hidden ${
-          !nodeA.a && "bg-slate-800 bg-opacity-5"
-        }`}
+        className="rounded-md flex flex-col gap-0 h-full relative overflow-x-hidden"
         style={boxStyle}
       >
         <Unit map={nodeA} />
@@ -91,10 +95,10 @@ export default function Columns({ nodeA, nodeB }) {
         </button>
       </div>
       <div
-        draggable
-        className={`h-full relative overflow-x-hidden ${
-          !nodeB.a && "bg-slate-800 bg-opacity-5"
-        } rounded-md`}
+        draggable={nodeB.a ? false : true}
+        onDragStart={startDrag}
+        onDragEnd={endDrag}
+        className="flex flex-col gap-0 h-full relative overflow-x-hidden rounded-md"
         style={{ width: `calc(100% - ${dims.w}px)`, minWidth: 150 }}
       >
         <Unit map={nodeB} />

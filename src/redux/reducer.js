@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { changeWidgetArray, deleteNode, getNode, splitTheNode } from "../layout";
-import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, REORDER, SET_DRAG } from "./actions";
+import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, REORDER_WIDGETS, SET_DRAG, CHANGE_LAYOUT } from "./actions";
 
 
 const initialLayoutState = {
@@ -48,7 +48,7 @@ export const rootReducer = (state=initialLayoutState, action) => {
             nodeDel.content = filteredContent
             return { ...state, map: {...layoutCopy} }
 
-        case REORDER:
+        case REORDER_WIDGETS:
             const { source, destination, draggableId } = action.payload
             // if nothing should change return nothing
             if (!destination) return state;
@@ -71,7 +71,10 @@ export const rootReducer = (state=initialLayoutState, action) => {
             return state
 
         case SET_DRAG:
-            return { ...state, isDragging: true}
+            return { ...state, isDragging: action.payload}
+        
+        case CHANGE_LAYOUT:
+            return state
 
         default:
             return state
