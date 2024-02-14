@@ -1,7 +1,25 @@
 import { useState } from "react";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 
+
 export default function AddWidget() {
+  const [isOpen, setIsOpen] = useState(false)
+  return (
+    <div className="relative">
+      <OpenList setIsOpen={setIsOpen}/>
+      { isOpen ? <div className="absolute bg-slate-900/20 w-[300px] h-[500px] rounded-[50px] z-10"></div> : null }
+    </div>
+  )
+}
+
+
+
+
+
+
+
+
+function OpenList({setIsOpen}) {
   const [showAdd, setShowAdd] = useState(false);
 
   return (
@@ -15,7 +33,9 @@ export default function AddWidget() {
           showAdd ? "translate-y-[-80px]" : ""
         }`}
       >
-        <button className="bg-sky-500 h-full w-full rounded-full flex">
+        <button
+        onClick={() => setIsOpen((state) => !state)} 
+        className="bg-sky-500 h-full w-full rounded-full flex">
           <HiOutlineSquaresPlus className="m-auto text-[30px]" />
         </button>
       </div>
