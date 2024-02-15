@@ -2,8 +2,12 @@ import Green from "./Components/Widgets/Green/Green"
 import Purple from "./Components/Widgets/Purple/Purple"
 
 export const widgets = {
-    green: Green,
-    purple: Purple
+    "green": Green,
+    "purple": Purple
+}
+
+export const dndTypes = {
+    WIDGET_BOX: 'WIDGET_BOX' 
 }
 
 export const createNewNode = (columnOrRow) => {

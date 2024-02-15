@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'work': ["Work Sans", "sans"],
+        'source': ["Source Sans 3", "sans"],
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/container-queries'),
