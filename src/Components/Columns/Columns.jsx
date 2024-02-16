@@ -7,6 +7,8 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 // actions
 import { setDragging } from "../../redux/actions";
+// react-dnd
+import { useDrag } from 'react-dnd';
 
 export default function Columns({ nodeA, nodeB }) {
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ export default function Columns({ nodeA, nodeB }) {
   const stopResize = () => {
     setDrag({ ...drag, active: false });
   };
-
+  //////////////////////////////////////
   const startDrag = (flag, id) => {
     flag && dispatch(setDragging(id));
   };
@@ -60,6 +62,7 @@ export default function Columns({ nodeA, nodeB }) {
   const endDrag = () => {
     dispatch(setDragging(null));
   };
+  ////////////////////////////////
 
   return (
     <div
@@ -75,9 +78,6 @@ export default function Columns({ nodeA, nodeB }) {
         ></div>
       )}
       <div
-        draggable={nodeA.a ? "false" : "true"}
-        onDragStart={() => startDrag(!nodeA.a, nodeA.id)}
-        onDragEnd={endDrag}
         id="columnA"
         ref={refA}
         className="rounded-md flex flex-col gap-0 h-full relative overflow-x-hidden"
@@ -87,7 +87,7 @@ export default function Columns({ nodeA, nodeB }) {
       </div>
       <div id="gap" className="w-1 relative shrink-0">
         <button
-          id="handle"
+          id="resizeHandle"
           className="w-1 h-full absolute hover:cursor-col-resize shrink-0"
           onMouseDown={startResize}
         >
@@ -95,9 +95,6 @@ export default function Columns({ nodeA, nodeB }) {
         </button>
       </div>
       <div
-        draggable={nodeB.a ? "false" : "true"}
-        onDragStart={() => startDrag(!nodeB.a, nodeB.id)}
-        onDragEnd={endDrag}
         className="flex flex-col gap-0 h-full relative overflow-x-hidden rounded-md"
         style={{ width: `calc(100% - ${dims.w}px)`, minWidth: 150 }}
       >

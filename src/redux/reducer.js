@@ -34,7 +34,7 @@ export const rootReducer = (state=initialLayoutState, action) => {
                 type: action.payload.widgetType
             }
             layoutCopy = { ...state.map };
-            const nodeAdd = getNode(layoutCopy, action.payload.id)
+            const nodeAdd = getNode(layoutCopy, action.payload.layoutId)
             nodeAdd.content.push(newWidget)   
             return { ...state, map: {...layoutCopy} }
 
@@ -69,7 +69,6 @@ export const rootReducer = (state=initialLayoutState, action) => {
             return state
 
         case SET_DRAG:
-            console.log(action.payload)
             return { ...state, isDragging: action.payload}
         
         case CHANGE_LAYOUT:

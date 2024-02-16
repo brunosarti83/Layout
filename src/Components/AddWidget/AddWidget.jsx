@@ -76,8 +76,8 @@ function WidgetsNav() {
   <div className="w-full h-full text-white font-source">
     <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-4 mb-4">drag and drop...</div>
     <ul className="flex flex-col gap-2">
-      {Object.keys(widgets).map((widget) => (
-        <li>
+      {Object.keys(widgets).map((widget, index) => (
+        <li key={index}>
           <WidgetItem widget={widget}/>
         </li>
       ))}
@@ -92,6 +92,7 @@ function WidgetItem({widget}) {
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
 		// "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET_BOX,
+    item: { widget },
 		// The collect function utilizes a "monitor" instance
 		// to pull important pieces of state from the DnD system.
     collect: (monitor) => ({

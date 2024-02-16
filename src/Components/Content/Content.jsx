@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { createElement } from "react";
 import { widgets, dndTypes } from "../../layout";
 // actions
-import { removeWidget, addWidget } from "../../redux/actions";
+import { removeWidget, addWidget, setDragging } from "../../redux/actions";
 // react-beatiful-dnd
 import { Droppable } from "react-beautiful-dnd";
 // react-dnd 
-import { useDrop } from "react-dnd";
+import { useDrop, useDrag } from "react-dnd";
 
 export default function Content({ map }) {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function Content({ map }) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: dndTypes.WIDGET_BOX,
-    drop: () => console.log('dropping'),
+    drop: (item) => dispatch(addWidget(map.id, item.widget)),
     // Props to collect
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -26,11 +26,27 @@ export default function Content({ map }) {
     })
   }))
 
+  const [{ isDragging }, drag] = useDrag(() => ({
+    // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
+		// "type" is required. It is used by the "accept" specification of drop targets.
+    type: dndTypes.LAYOUT,
+    item: () => {
+      dispatch(setDragging(map.id))
+      return { id: map.id }
+    },
+		// The collect function utilizes a "monitor" instance
+		// to pull important pieces of state from the DnD system.
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    })
+  }))
+  
   return (
+    // <div ref={drag}>
     <Droppable droppableId={map.id} type="widget">
       {(provided, snapshot) => (
         <div
-          ref={(el)=> {provided.innerRef(el); drop(el);}}
+          ref={(el)=> {provided.innerRef(el); drop(el); drag(el);}}
           {...provided.droppableProps}
           className={`flex ${
             map.column && "flex-col"
@@ -48,29 +64,10 @@ export default function Content({ map }) {
               onClose: () => dispatch(removeWidget(map.id, elem.id)),
             })
           )}
-          {
-            // this buttons are just for testing
-            !map.a ? (
-              <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                <button
-                  onClick={() => dispatch(addWidget(map.id, "purple"))}
-                  className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
-                >
-                  Purple
-                </button>
-                <button
-                  onClick={() => dispatch(addWidget(map.id, "green"))}
-                  className="w-[100px] h-[30px] bg-gray-400 border-solid border-white border-2"
-                >
-                  Green
-                </button>
-              </div>
-            ) : null
-            // en of testing buttons
-          }
           {provided.placeholder}
         </div>
       )}
     </Droppable>
+    // </div>
   );
 }
