@@ -4,7 +4,6 @@ export const REMOVE_FROM_LAYOUT = 'REMOVE_FROM_LAYOUT'
 export const ADD_WIDGET = 'ADD_WIDGET'
 export const REMOVE_WIDGET = 'REMOVE_WIDGET'
 export const REORDER_WIDGETS = 'REORDER_WIDGETS'
-export const SET_DRAG = 'SET_DRAG'
 export const CHANGE_LAYOUT = 'CHANGE_LAYOUT'
 
 
@@ -40,13 +39,6 @@ export const reorder = (result) => {
     return {
         type: REORDER_WIDGETS,
         payload: result
-    }
-}
-
-export const setDragging = (dragging) => {
-    return {
-        type: SET_DRAG,
-        payload: dragging
     }
 }
 

@@ -4,15 +4,8 @@
 import Unit from "../Unit/Unit";
 // hooks and tools
 import { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-// actions
-import { setDragging } from "../../redux/actions";
-// react-dnd
-import { useDrag } from 'react-dnd';
 
 export default function Columns({ nodeA, nodeB }) {
-  const dispatch = useDispatch();
-
   const [drag, setDrag] = useState({
     active: false,
     x: "",
@@ -54,15 +47,6 @@ export default function Columns({ nodeA, nodeB }) {
   const stopResize = () => {
     setDrag({ ...drag, active: false });
   };
-  //////////////////////////////////////
-  const startDrag = (flag, id) => {
-    flag && dispatch(setDragging(id));
-  };
-
-  const endDrag = () => {
-    dispatch(setDragging(null));
-  };
-  ////////////////////////////////
 
   return (
     <div

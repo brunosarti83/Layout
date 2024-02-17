@@ -1,51 +1,54 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
-import { motion } from 'framer-motion';
-import { widgets, dndTypes } from '../../layout';
-import { useDrag } from 'react-dnd';
+import { motion } from "framer-motion";
+import { widgets, dndTypes } from "../../layout";
+import { useDrag } from "react-dnd";
 
 const menu = {
   open: {
-      width: "280px",
-      height: "650px",
-      bottom: "-10px",
-      left: "-10px",
-      opacity: 1,
-      transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1]}
+    width: "280px",
+    height: "500px",
+    bottom: "-10px",
+    left: "-10px",
+    opacity: 1,
+    transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] },
   },
   closed: {
-      width: "0px",
-      height: "0px",
-      bottom: "20px",
-      left: "20px",
-      opacity: 0,
-      transition: { duration: 0.75, delay: 0.35, type: "tween", ease: [0.76, 0, 0.24, 1]}
-  }
-}
-
-
+    width: "0px",
+    height: "0px",
+    bottom: "20px",
+    left: "20px",
+    opacity: 0,
+    transition: {
+      duration: 0.75,
+      delay: 0.35,
+      type: "tween",
+      ease: [0.76, 0, 0.24, 1],
+    },
+  },
+};
 
 export default function AddWidget() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="relative">
-      <OpenList setIsOpen={setIsOpen}/>
-      <motion.div 
-      className="absolute bg-slate-900/30 rounded-[50px] flex justify-center items-center px-2 pb-20 pt-6"
-      variants={menu}
-      animate={isOpen ? "open" : "closed"}
-      initial="closed"
+      <OpenList setIsOpen={setIsOpen} />
+      <motion.div
+        onMouseLeave={() => setIsOpen(false)}
+        className="absolute bg-slate-900/30 rounded-[50px] flex justify-center items-center px-2 pb-20 pt-6"
+        variants={menu}
+        animate={isOpen ? "open" : "closed"}
+        initial="closed"
       >
-        <WidgetsNav />
+        <WidgetsNav isOpen={isOpen} />
       </motion.div>
     </div>
-  )
+  );
 }
 
-
-
-function OpenList({setIsOpen}) {
+function OpenList({ setIsOpen }) {
   const [showAdd, setShowAdd] = useState(false);
 
   return (
@@ -60,8 +63,9 @@ function OpenList({setIsOpen}) {
         }`}
       >
         <button
-        onClick={() => setIsOpen((state) => !state)} 
-        className="bg-sky-500 h-full w-full rounded-full flex">
+          onClick={() => setIsOpen((state) => !state)}
+          className="bg-sky-500 h-full w-full rounded-full flex"
+        >
           <HiOutlineSquaresPlus className="m-auto text-[30px]" />
         </button>
       </div>
@@ -69,48 +73,46 @@ function OpenList({setIsOpen}) {
   );
 }
 
-
-function WidgetsNav() {
-  
+function WidgetsNav({ isOpen }) {
   return (
-  <div className="w-full h-full text-white font-source">
-    <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-4 mb-4">drag and drop...</div>
-    <ul className="flex flex-col gap-2">
-      {Object.keys(widgets).map((widget, index) => (
-        <li key={index}>
-          <WidgetItem widget={widget}/>
-        </li>
-      ))}
-    </ul>
-  </div>
-  )
+    <div className="w-full h-full text-white font-source">
+      <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-4 mb-4">
+        drag and drop...
+      </div>
+      <ul className={`flex flex-col gap-2 ${!isOpen ? "hidden" : null}`}>
+        {Object.keys(widgets).map((widget, index) => (
+          <li key={index}>
+            <WidgetItem widget={widget} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-
-function WidgetItem({widget}) {
+function WidgetItem({ widget }) {
   const [{ isDragging }, drag] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
-		// "type" is required. It is used by the "accept" specification of drop targets.
+    // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET_BOX,
     item: { widget },
-		// The collect function utilizes a "monitor" instance
-		// to pull important pieces of state from the DnD system.
+    // The collect function utilizes a "monitor" instance
+    // to pull important pieces of state from the DnD system.
     collect: (monitor) => ({
-      isDragging: monitor.isDragging()
-    })
-  }))
+      isDragging: monitor.isDragging(),
+    }),
+  }));
 
   return (
     <div
-    ref={drag} 
-    className="w-full h-[50px] flex gap-4 items-center hover:bg-gray-300/50 pl-[30px] cursor-grab"
+      ref={drag}
+      className="w-full h-[50px] flex gap-4 items-center hover:bg-gray-300/50 pl-[30px] cursor-grab"
     >
-      <div 
-      className="w-10 h-10 rounded-[25%] flex justify-center items-center border-[2px] border-white"
-      >
-        {widget[0].toUpperCase()}{widget[1]}
+      <div className="w-10 h-10 rounded-[25%] flex justify-center items-center border-[2px] border-white">
+        {widget[0].toUpperCase()}
+        {widget[1]}
       </div>
       <div className="text-lg">{widget[0].toUpperCase() + widget.slice(1)}</div>
     </div>
-  )
+  );
 }

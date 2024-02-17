@@ -4,13 +4,8 @@
 import Unit from "../Unit/Unit";
 // hooks and tools
 import { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
-// actions
-import { setDragging } from "../../redux/actions";
 
 export default function Rows({ nodeA, nodeB }) {
-  const dispatch = useDispatch();
-
   const [drag, setDrag] = useState({
     active: false,
     y: "",
@@ -53,14 +48,6 @@ export default function Rows({ nodeA, nodeB }) {
     setDrag({ ...drag, active: false });
   };
 
-  const startDrag = (flag, id) => {
-    flag && dispatch(setDragging(id));
-  };
-
-  const endDrag = () => {
-    dispatch(setDragging(null));
-  };
-
   return (
     <div
       id="wrapperForTwoRows"
@@ -74,9 +61,6 @@ export default function Rows({ nodeA, nodeB }) {
         ></div>
       )}
       <div
-        draggable={nodeA.a ? "false" : "true"}
-        onDragStart={() => startDrag(!nodeA.a, nodeA.id)}
-        onDragEnd={endDrag}
         id="rowA"
         ref={refA}
         className="flex w-full rounded-md relative overflow-y-hidden"
@@ -94,9 +78,6 @@ export default function Rows({ nodeA, nodeB }) {
         </button>
       </div>
       <div
-        draggable={nodeB.a ? "false" : "true"}
-        onDragStart={() => startDrag(!nodeB.a, nodeB.id)}
-        onDragEnd={endDrag}
         className="flex w-full h-full relative overflow-y-hidden rounded-md"
         style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
       >

@@ -6,10 +6,10 @@ import { useDispatch } from "react-redux";
 import { createElement } from "react";
 import { widgets, dndTypes } from "../../layout";
 // actions
-import { removeWidget, addWidget, setDragging } from "../../redux/actions";
+import { removeWidget, addWidget, changeLayout } from "../../redux/actions";
 // react-beatiful-dnd
 import { Droppable } from "react-beautiful-dnd";
-// react-dnd 
+// react-dnd
 import { useDrop, useDrag } from "react-dnd";
 
 export default function Content({ map }) {
@@ -22,31 +22,45 @@ export default function Content({ map }) {
     // Props to collect
     collect: (monitor) => ({
       isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
-  }))
+      canDrop: monitor.canDrop(),
+    }),
+  }));
+
+  // const onDropRowOrCol = () => {
+  //   dispatch(changeLayout(mapId, position, isDragging));
+  //   dispatch(setDragging(null));
+  // };
 
   const [{ isDragging }, drag] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
-		// "type" is required. It is used by the "accept" specification of drop targets.
+    // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.LAYOUT,
-    item: () => {
-      dispatch(setDragging(map.id))
-      return { id: map.id }
+    item: { dragId: map.id },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      if (item && dropResult) {
+        dispatch(
+          changeLayout(dropResult.dropId, dropResult.position, item.dragId)
+        );
+      }
     },
-		// The collect function utilizes a "monitor" instance
-		// to pull important pieces of state from the DnD system.
+    // The collect function utilizes a "monitor" instance
+    // to pull important pieces of state from the DnD system.
     collect: (monitor) => ({
-      isDragging: monitor.isDragging()
-    })
-  }))
-  
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+
   return (
     // <div ref={drag}>
     <Droppable droppableId={map.id} type="widget">
       {(provided, snapshot) => (
         <div
-          ref={(el)=> {provided.innerRef(el); drop(el); drag(el);}}
+          ref={(el) => {
+            provided.innerRef(el);
+            drop(el);
+            drag(el);
+          }}
           {...provided.droppableProps}
           className={`flex ${
             map.column && "flex-col"
