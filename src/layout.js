@@ -8,6 +8,7 @@ export const widgets = {
 
 export const dndTypes = {
     WIDGET_BOX: 'WIDGET_BOX',
+    WIDGET: 'WIDGET',
     LAYOUT: 'LAYOUT' 
 }
 

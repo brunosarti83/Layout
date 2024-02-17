@@ -4,6 +4,8 @@ import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import { motion } from "framer-motion";
 import { widgets, dndTypes } from "../../layout";
 import { useDrag } from "react-dnd";
+import { useDispatch } from "react-redux";
+import { addWidget } from "../../redux/actions";
 
 const menu = {
   open: {
@@ -91,11 +93,17 @@ function WidgetsNav({ isOpen }) {
 }
 
 function WidgetItem({ widget }) {
+  const dispatch = useDispatch();
+
   const [{ isDragging }, drag] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET_BOX,
     item: { widget },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      dispatch(addWidget(dropResult.dropId, item.widget, dropResult.position));
+    },
     // The collect function utilizes a "monitor" instance
     // to pull important pieces of state from the DnD system.
     collect: (monitor) => ({

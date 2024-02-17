@@ -21,10 +21,10 @@ export const removeFromLayout = (getId) => {
     }
 }
 
-export const addWidget = (layoutId, widgetType) => {
+export const addWidget = (layoutId, widgetType, index) => {
     return {
         type: ADD_WIDGET,
-        payload: { layoutId, widgetType }
+        payload: { layoutId, widgetType, index }
     }
 }
 

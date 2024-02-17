@@ -7,11 +7,9 @@ import AddWidget from "../AddWidget/AddWidget";
 import { useDispatch } from "react-redux";
 // actions
 import { reorder } from "../../redux/actions";
-// react-beatiful-dnd
-import { DragDropContext } from "react-beautiful-dnd";
 // react-dnd
 import { DndProvider } from "react-dnd";
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { HTML5Backend } from "react-dnd-html5-backend";
 // viewTransition
 import { viewTransitionWrapper } from "../../helpers/viewTransitionWrapper";
 
@@ -25,15 +23,13 @@ export default function Layout({ map }) {
   };
 
   return (
-    <div className="bg-gray-50 h-[100dvh] w-full flex relative py-4">
-      <DndProvider backend={HTML5Backend}>
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Unit map={map} />
-        </DragDropContext>
+    <DndProvider backend={HTML5Backend}>
+      <div className="bg-gray-50 h-[100dvh] w-full flex relative py-4 overflow-hidden">
+        <Unit map={map} />
         <div className="absolute bottom-10 left-10">
           <AddWidget />
         </div>
-      </DndProvider>
-    </div>
+      </div>
+    </DndProvider>
   );
 }

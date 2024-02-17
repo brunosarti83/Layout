@@ -34,7 +34,7 @@ export const rootReducer = (state=initialLayoutState, action) => {
             }
             layoutCopy = { ...state.map };
             const nodeAdd = getNode(layoutCopy, action.payload.layoutId)
-            nodeAdd.content.push(newWidget)   
+            nodeAdd.content.splice(action.payload.index, 0, newWidget)  
             return { ...state, map: {...layoutCopy} }
 
         case REMOVE_WIDGET:

@@ -4,9 +4,12 @@ import DropAreaColumn from "../DropAreaColumn/DropAreaColumn";
 
 export default function WrapperForDropAreas({ mapId, children }) {
   return (
-    <div id="wrapperForDropAreas" className="w-full h-full flex flex-col gap-0">
+    <div
+      id="wrapperForDropAreas"
+      className="w-full h-full flex flex-col gap-0 overflow-auto"
+    >
       <DropAreaRow mapId={mapId} position={"top"} />
-      <div className="w-full h-full flex gap-0">
+      <div className="w-full h-full flex gap-0 overflow-auto">
         <DropAreaColumn mapId={mapId} position={"left"} />
         {children}
         <DropAreaColumn mapId={mapId} position={"right"} />

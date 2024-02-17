@@ -7,10 +7,10 @@ import WrapperForDropAreas from "../WrapperForDropAreas/WrapperForDropAreas";
 
 export default function Unit({ map }) {
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full h-full overflow-hidden">
       {!map.a ? (
         <WrapperForDropAreas mapId={map.id}>
-          <div className="h-full w-full bg-slate-800 bg-opacity-5">
+          <div className="h-full w-full bg-slate-800 bg-opacity-5 overflow-auto">
             <Content map={map} />
           </div>
         </WrapperForDropAreas>
