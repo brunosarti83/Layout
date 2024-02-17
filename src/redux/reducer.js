@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
-import { changeWidgetArray, deleteNode, getNode, reorderLayout, splitTheNode } from "../layout";
-import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, REORDER_WIDGETS, CHANGE_LAYOUT } from "./actions";
+import { deleteNode, getNode, reorderLayout, reorderWidgets, splitTheNode } from "../layout";
+import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WIDGETS, CHANGE_LAYOUT } from "./actions";
 
 
 const initialLayoutState = {
@@ -38,37 +38,25 @@ export const rootReducer = (state=initialLayoutState, action) => {
             return { ...state, map: {...layoutCopy} }
 
         case REMOVE_WIDGET:
-            const { layoutId, widgetId } = action.payload
             layoutCopy = { ...state.map };
-            const nodeDel = getNode(layoutCopy, layoutId)
-            const filteredContent = nodeDel.content.filter((widget) => widget.id !== widgetId)
+            const nodeDel = getNode(layoutCopy, action.payload.layoutId)
+            const filteredContent = nodeDel.content.filter((widget) => widget.id !== action.payload.widgetId)
             nodeDel.content = filteredContent
             return { ...state, map: {...layoutCopy} }
 
-        case REORDER_WIDGETS:
-            const { source, destination, draggableId } = action.payload
-            // if nothing should change return nothing
-            if (!destination) return state;
+        case CHANGE_WIDGETS:
             layoutCopy = { ...state.map };
-            // if source and destination are both the same
-            if (source.droppableId === destination.droppableId) {
-                // get the node
-                const nodeToChange = getNode(layoutCopy, destination.droppableId)
-                nodeToChange.content = changeWidgetArray(source, destination, nodeToChange.content)
-                return { ...state, map: {...layoutCopy} }  
-            // else if S and D are NOT the same
-            } else if (source.droppableId !== destination.droppableId) {
-                const nodeFrom = getNode(layoutCopy, source.droppableId)
-                const widget = nodeFrom.content[source.index]
-                nodeFrom.content.splice(source.index, 1)
-                const nodeTo = getNode(layoutCopy, destination.droppableId)
-                nodeTo.content.splice(destination.index, 0, widget)
-                return { ...state, map: {...layoutCopy} } 
-            }
-            return state
+            const newLayout = reorderWidgets(
+                layoutCopy,
+                action.payload.widgetId, 
+                action.payload.parentId, 
+                action.payload.dropId, 
+                action.payload.position
+                )
+            return { ...state, map: {...newLayout} }
         
         case CHANGE_LAYOUT:
-            const { dropId, position, dragId } = action.payload
+            let { dropId, position, dragId } = action.payload
             if (dragId === dropId) {
                 return state
             }

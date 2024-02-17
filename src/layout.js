@@ -87,13 +87,6 @@ export const deleteNode = ({ node, getId }) => {
     return node
 }
 
-export const changeWidgetArray = (source, destination, array) => {
-    const widget = array[source.index]
-    array.splice(source.index, 1)
-    array.splice(destination.index, 0, widget)
-    return array
-}
-
 export const reorderLayout = (tree, dropId, position, dragId) => {
     const dropNode = getNode(tree, dropId)
     const dragNode = getNode(tree, dragId)
@@ -112,4 +105,26 @@ export const reorderLayout = (tree, dropId, position, dragId) => {
     dropNode.b = nodeB
     const newTree = deleteNode({node:tree, getId:dragId})
     return newTree
+}
+
+export const reorderWidgets = (tree, widgetId, parentId, dropId, position) => {
+    // if source and destination are both the same
+    if (parentId === dropId) {
+        // get the node
+        const nodeToChange = getNode(tree, dropId)
+        const widget = {...nodeToChange.content.find((w) => w.id === widgetId)}
+        const newContent = nodeToChange.content.filter((w) => w.id !== widgetId)
+        newContent.splice(position, 0, widget)
+        nodeToChange.content = [...newContent]
+        return tree  
+    // else if S and D are NOT the same
+    } else if (parentId !== dropId) {
+        const nodeFrom = getNode(tree, parentId)
+        const widget = {...nodeFrom.content.find((w) => w.id === widgetId)}
+        nodeFrom.content = nodeFrom.content.filter((w) => w.id !== widgetId)
+        const nodeTo = getNode(tree, dropId)
+        nodeTo.content.splice(position, 0, widget)
+        return tree
+    }
+    return tree
 }

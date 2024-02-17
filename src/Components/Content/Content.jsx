@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import React from "react";
 // minor components
 import AddButtons from "../AddButtons/AddButtons";
 // hooks and tools
@@ -10,6 +11,7 @@ import { removeWidget, changeLayout } from "../../redux/actions";
 // react-dnd
 import { useDrag } from "react-dnd";
 import DropAreaWidgetColumns from "../DropAreaWidgets/DropAreaColumns/DropAreaWidgetColumns";
+import DropAreaWidgetRows from "../DropAreaWidgets/DropAreaRows/DropAreaWidgetRows";
 
 export default function Content({ map }) {
   const dispatch = useDispatch();
@@ -43,19 +45,25 @@ export default function Content({ map }) {
       <div className="absolute top-2 right-0 m-[2px] z-50">
         <AddButtons id={map.id} />
       </div>
-      {map.column ? <DropAreaWidgetColumns map={map} position={0} /> : null}
+      {map.column ? (
+        <DropAreaWidgetColumns map={map} position={0} />
+      ) : (
+        <DropAreaWidgetRows map={map} position={0} />
+      )}
       {map.content.map((elem, index) => (
-        <>
+        <React.Fragment key={index}>
           {createElement(widgets[elem.type], {
-            index,
             id: elem.id,
+            parentId: map.id,
             direction: map.column ? "column" : "row",
             onClose: () => dispatch(removeWidget(map.id, elem.id)),
           })}
           {map.column ? (
             <DropAreaWidgetColumns map={map} position={index + 1} />
-          ) : null}
-        </>
+          ) : (
+            <DropAreaWidgetRows map={map} position={index + 1} />
+          )}
+        </React.Fragment>
       ))}
     </div>
   );

@@ -1,7 +1,43 @@
-import { Draggable } from "react-beautiful-dnd";
-
 /* eslint-disable react/prop-types */
-export default function Purple({ id, index, direction, onClose }) {
+
+// hooks & tools
+import { useDispatch } from "react-redux";
+import { dndTypes } from "../../../layout";
+// react-dnd
+import { useDrag } from "react-dnd";
+// actions
+import { changeWidgets } from "../../../redux/actions";
+// minorComponents
+import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
+
+export default function Purple({ id, parentId, direction, onClose }) {
+  const dispatch = useDispatch();
+
+  const [{ isDragging }, drag] = useDrag(() => ({
+    // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
+    // "type" is required. It is used by the "accept" specification of drop targets.
+    type: dndTypes.WIDGET,
+    item: { widId: id, parentId },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      if (item && dropResult) {
+        dispatch(
+          changeWidgets(
+            item.widId,
+            item.parentId,
+            dropResult.dropId,
+            dropResult.position
+          )
+        );
+      }
+    },
+    // The collect function utilizes a "monitor" instance
+    // to pull important pieces of state from the DnD system.
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+
   const styles = {
     width:
       direction === "column" ? "100%" : direction === "row" ? "250px" : "100%",
@@ -9,25 +45,18 @@ export default function Purple({ id, index, direction, onClose }) {
       direction === "column" ? "250px" : direction === "row" ? "100%" : "",
   };
   return (
-    <Draggable draggableId={id.toString()} index={index}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          style={{ ...styles, ...provided.draggableProps.style, viewTransitionName: 'name-'+id }} //nuevo
-          className="bg-purple-500 rounded-[20px] flex-shrink-0 flex flex-col"
-        >
-          <p className="m-auto">Purple Content</p>
-          <button
-            type="button"
-            onClick={onClose}
-            className="m-auto p-2 bg-gray-400 border-[1px] border-solid border-gray-700"
-          >
-            Close
-          </button>
-        </div>
-      )}
-    </Draggable>
+    <div
+      ref={drag}
+      style={{
+        ...styles,
+        viewTransitionName: "name-" + id,
+      }}
+      className="bg-purple-200 rounded-[20px] flex flex-col flex-shrink-0"
+    >
+      <div className="w-full flex justify-start px-4 py-2">
+        <ThreeDotsMenu onClose={onClose} />
+      </div>
+      {"<WidgetExample />"}
+    </div>
   );
 }
