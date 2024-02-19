@@ -51,7 +51,7 @@ export default function Columns({ nodeA, nodeB }) {
   return (
     <div
       id="wrapperForTwoColumns"
-      className="w-full h-full flex gap-0 flex-row-reverse relative"
+      className="w-full h-full flex gap-0 flex-row-reverse relative overflow-y-hidden"
     >
       {drag.active && (
         <div
@@ -79,6 +79,7 @@ export default function Columns({ nodeA, nodeB }) {
         </button>
       </div>
       <div
+        id="columnB"
         className="flex flex-col gap-0 h-full relative overflow-x-hidden rounded-md"
         style={{ width: `calc(100% - ${dims.w}px)`, minWidth: 150 }}
       >

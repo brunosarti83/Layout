@@ -39,7 +39,7 @@ export default function AddWidget() {
       <OpenList setIsOpen={setIsOpen} />
       <motion.div
         onMouseLeave={() => setIsOpen(false)}
-        className="absolute bg-slate-900/30 rounded-[50px] flex justify-center items-center px-2 pb-20 pt-6"
+        className="absolute bg-slate-900/30 rounded-[50px] flex justify-center items-center px-2 pb-20 pt-6 backdrop-filter backdrop-blur-[50px]"
         variants={menu}
         animate={isOpen ? "open" : "closed"}
         initial="closed"

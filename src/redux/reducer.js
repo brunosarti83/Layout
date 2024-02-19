@@ -14,6 +14,7 @@ const initialLayoutState = {
 }
 
 export const rootReducer = (state=initialLayoutState, action) => {
+    console.log(state)
     let layoutCopy;
     let newState;
     switch (action.type) {

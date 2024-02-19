@@ -51,7 +51,7 @@ export default function Rows({ nodeA, nodeB }) {
   return (
     <div
       id="wrapperForTwoRows"
-      className="w-full h-full flex flex-col relative gap-0"
+      className="w-full h-full flex flex-col relative gap-0 overflow-x-hidden"
     >
       {drag.active && (
         <div
@@ -63,7 +63,7 @@ export default function Rows({ nodeA, nodeB }) {
       <div
         id="rowA"
         ref={refA}
-        className="flex w-full rounded-md relative overflow-y-hidden"
+        className="flex gap-0 w-full rounded-md relative overflow-y-hidden"
         style={boxStyle}
       >
         <Unit map={nodeA} />
@@ -78,7 +78,8 @@ export default function Rows({ nodeA, nodeB }) {
         </button>
       </div>
       <div
-        className="flex w-full h-full relative overflow-y-hidden rounded-md"
+        id="rowB"
+        className="flex gap-0 w-full relative overflow-y-hidden rounded-md"
         style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
       >
         <Unit map={nodeB} />

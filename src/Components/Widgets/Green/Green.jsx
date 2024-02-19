@@ -53,7 +53,7 @@ export default function Green({ id, parentId, direction, onClose }) {
       }}
       className="bg-green-200 rounded-[20px] flex flex-col flex-shrink-0"
     >
-      <div className="w-full flex justify-start px-4 py-2">
+      <div className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing">
         <ThreeDotsMenu onClose={onClose} />
       </div>
       {"<WidgetExample />"}

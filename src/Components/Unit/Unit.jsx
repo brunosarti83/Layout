@@ -10,7 +10,7 @@ export default function Unit({ map }) {
     <div className="w-full h-full overflow-hidden">
       {!map.a ? (
         <WrapperForDropAreas mapId={map.id}>
-          <div className="h-full w-full bg-slate-800 bg-opacity-5 overflow-auto">
+          <div className="h-full w-full bg-slate-800 bg-opacity-5 overflow-auto scrollbar-thin">
             <Content map={map} />
           </div>
         </WrapperForDropAreas>

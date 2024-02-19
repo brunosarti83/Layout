@@ -22,7 +22,7 @@ export default function DropAreaRow({ mapId, position }) {
       className={`w-full relative transition-all duration-75 ${
         isOver && canDrop
           ? "h-[200px] before:bg-slate-300/50 before:absolute before:inset-2 before:rounded-xl before:border-white before:border-[1px]"
-          : "h-[4px]"
+          : "h-[4px] shrink-0"
       } ${canDrop && "border-slate-300 border-[1px] border-dashed my-[1px]"}`}
     ></div>
   );

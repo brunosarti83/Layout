@@ -24,7 +24,7 @@ export default function DropAreaWidgetRows({ map, position }) {
         position === map.content.length
           ? isOver && canDrop
             ? "w-full before:bg-slate-300/50 before:absolute before:inset-2 before:rounded-md before:border-white before:border-[1px] shrink-0"
-            : "w-full min-h-[8px]"
+            : "w-full min-w-[8px]"
           : isOver && canDrop
           ? "w-[200px] before:bg-slate-300/50 before:absolute before:inset-2 before:rounded-md before:border-white before:border-[1px] shrink-0"
           : "w-[8px] shrink-0"
