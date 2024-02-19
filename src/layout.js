@@ -88,8 +88,10 @@ export const deleteNode = ({ node, getId }) => {
 }
 
 export const reorderLayout = (tree, dropId, position, dragId) => {
+    // search for nodes
     const dropNode = getNode(tree, dropId)
     const dragNode = getNode(tree, dragId)
+    // column is true if moving drag to either left or right dropArea
     const column = position === 'left' || position === 'right'
     dropNode.column = column
     let nodeA;
