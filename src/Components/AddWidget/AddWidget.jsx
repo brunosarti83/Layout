@@ -35,7 +35,7 @@ export default function AddWidget() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <OpenList setIsOpen={setIsOpen} />
       <motion.div
         onMouseLeave={() => setIsOpen(false)}
