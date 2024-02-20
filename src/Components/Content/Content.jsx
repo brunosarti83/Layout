@@ -16,6 +16,10 @@ import DropAreaWidgetRows from "../DropAreaWidgets/DropAreaRows/DropAreaWidgetRo
 export default function Content({ map }) {
   const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    console.log(map.id);
+  });
+
   const [{ isDragging }, drag] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
     // "type" is required. It is used by the "accept" specification of drop targets.
@@ -23,6 +27,8 @@ export default function Content({ map }) {
     item: { dragId: map.id },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
+      console.log(dropResult);
+      console.log(map.id);
       if (item && dropResult) {
         dispatch(
           changeLayout(dropResult.dropId, dropResult.position, item.dragId)

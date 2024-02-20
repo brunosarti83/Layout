@@ -5,22 +5,46 @@ import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WI
 
 const initialLayoutState = {
     map: {
-        id: String(Math.floor(Math.random()*10000)),
+        id: '0001',//String(Math.floor(Math.random()*10000)),
         content: [],
         column: true,
-        a: null,
-        b: null
+        a: {
+            id: '0002',
+            content: [],
+            column: false,
+            a: {
+                id:'0003',
+                content:[],
+                column: false,
+                a:null,
+                b:null,
+            },
+            b: {
+                id:'0004',
+                content:[],
+                column: false,
+                a: null,
+                b: null,
+            }
+        },
+        b: {
+            id:'0005',
+            content:[],
+            column:true,
+            a:null,
+            b:null,
+        }
     }
 }
 
 export const rootReducer = (state=initialLayoutState, action) => {
-    console.log(state)
     let layoutCopy;
     let newState;
     switch (action.type) {
         case ADD_TO_LAYOUT:
             layoutCopy = { ...state.map }
             newState = splitTheNode({ node: layoutCopy, ...action.payload })
+            console.log(newState)
             return { ...state, map: {...newState} }
 
         case REMOVE_FROM_LAYOUT:

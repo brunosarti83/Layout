@@ -9,13 +9,13 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 export default function Layout({ map }) {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="bg-gray-50 h-[100dvh] w-full flex relative py-4 overflow-hidden">
+    <div className="bg-gray-50 h-[100dvh] w-full flex relative py-4 overflow-hidden">
+      <DndProvider backend={HTML5Backend}>
         <Unit map={map} />
         <div className="absolute bottom-10 left-10">
           <AddWidget />
         </div>
-      </div>
-    </DndProvider>
+      </DndProvider>
+    </div>
   );
 }

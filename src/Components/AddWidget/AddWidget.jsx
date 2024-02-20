@@ -100,7 +100,7 @@ function WidgetItem({ widget }) {
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET_BOX,
     item: { widget },
-    end: (item, monitor) => {
+    end(item, monitor) {
       const dropResult = monitor.getDropResult();
       dispatch(addWidget(dropResult.dropId, item.widget, dropResult.position));
     },
