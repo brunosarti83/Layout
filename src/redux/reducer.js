@@ -4,6 +4,10 @@ import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WI
 
 
 const initialLayoutState = {
+    drag: {
+        id: null,
+        type: null,
+    },
     map: {
         id: '0001',//String(Math.floor(Math.random()*10000)),
         content: [],

@@ -5,16 +5,19 @@ import { useDrop } from "react-dnd";
 import { dndTypes } from "../../layout";
 
 export default function DropAreaColumn({ mapId, position }) {
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: dndTypes.LAYOUT,
-    drop: () => ({ dropId: mapId, position }),
+    drop: () => { 
+      return { dropId: mapId, position }
+    },
     // Props to collect
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
-  }));
+  }),[mapId, position]);
 
   return (
     <div

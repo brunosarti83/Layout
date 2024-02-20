@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import { Fragment } from "react";
 // minor components
 import AddButtons from "../AddButtons/AddButtons";
 // hooks and tools
@@ -16,19 +16,15 @@ import DropAreaWidgetRows from "../DropAreaWidgets/DropAreaRows/DropAreaWidgetRo
 export default function Content({ map }) {
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    console.log(map.id);
-  });
-
   const [{ isDragging }, drag] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.LAYOUT,
-    item: { dragId: map.id },
-    end: (item, monitor) => {
+    item: () => { 
+      return { dragId: map.id }
+    },
+    end(item, monitor) {
       const dropResult = monitor.getDropResult();
-      console.log(dropResult);
-      console.log(map.id);
       if (item && dropResult) {
         dispatch(
           changeLayout(dropResult.dropId, dropResult.position, item.dragId)
@@ -40,7 +36,7 @@ export default function Content({ map }) {
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  }));
+  }),[map]);
 
   return (
     <div
@@ -57,7 +53,7 @@ export default function Content({ map }) {
         <DropAreaWidgetRows map={map} position={0} />
       )}
       {map.content.map((elem, index) => (
-        <React.Fragment key={index}>
+        <Fragment key={index}>
           {createElement(widgets[elem.type], {
             id: elem.id,
             parentId: map.id,
@@ -69,7 +65,7 @@ export default function Content({ map }) {
           ) : (
             <DropAreaWidgetRows map={map} position={index + 1} />
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

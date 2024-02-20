@@ -43,7 +43,6 @@ export const changeWidgets = (widgetId, parentId, dropId, position) => {
 }
 
 export const changeLayout = (dropId, position, dragId) => {
-    console.log(dropId, position, dragId)
     return {
         type: CHANGE_LAYOUT,
         payload: { dropId, position, dragId }

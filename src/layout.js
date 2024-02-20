@@ -105,8 +105,6 @@ export const reorderLayout = (tree, dropId, position, dragId) => {
     }
     dropNode.a = nodeA
     dropNode.b = nodeB
-    console.log(dropNode)
-    return tree
     const newTree = deleteNode({node:tree, getId:dragId})
     return newTree
 }
