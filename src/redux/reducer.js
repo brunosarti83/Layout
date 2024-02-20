@@ -4,57 +4,28 @@ import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WI
 
 
 const initialLayoutState = {
-    drag: {
-        id: null,
-        type: null,
-    },
     map: {
-        id: '0001',//String(Math.floor(Math.random()*10000)),
+        id: String(Math.floor(Math.random()*10000)),
         content: [],
         column: true,
-        a: {
-            id: '0002',
-            content: [],
-            column: false,
-            a: {
-                id:'0003',
-                content:[],
-                column: false,
-                a:null,
-                b:null,
-            },
-            b: {
-                id:'0004',
-                content:[],
-                column: false,
-                a: null,
-                b: null,
-            }
-        },
-        b: {
-            id:'0005',
-            content:[],
-            column:true,
-            a:null,
-            b:null,
-        }
+        a: null,
+        b: null
     }
 }
 
 export const rootReducer = (state=initialLayoutState, action) => {
     let layoutCopy;
-    let newState;
+    let newLayout;
     switch (action.type) {
         case ADD_TO_LAYOUT:
             layoutCopy = { ...state.map }
-            newState = splitTheNode({ node: layoutCopy, ...action.payload })
-            console.log(newState)
-            return { ...state, map: {...newState} }
+            newLayout = splitTheNode({ node: layoutCopy, ...action.payload })
+            return { ...state, map: {...newLayout} }
 
         case REMOVE_FROM_LAYOUT:
             layoutCopy = { ...state.map };
-            newState = deleteNode({ node: layoutCopy, ...action.payload })
-            return { ...state, map: {...newState} }
+            newLayout = deleteNode({ node: layoutCopy, ...action.payload })
+            return { ...state, map: {...newLayout} }
         
         case ADD_WIDGET:
             const newWidget = {
@@ -68,14 +39,14 @@ export const rootReducer = (state=initialLayoutState, action) => {
 
         case REMOVE_WIDGET:
             layoutCopy = { ...state.map };
-            const nodeDel = getNode(layoutCopy, action.payload.layoutId)
-            const filteredContent = nodeDel.content.filter((widget) => widget.id !== action.payload.widgetId)
-            nodeDel.content = filteredContent
+            const fromNode = getNode(layoutCopy, action.payload.layoutId)
+            const filteredContent = fromNode.content.filter((widget) => widget.id !== action.payload.widgetId)
+            fromNode.content = filteredContent
             return { ...state, map: {...layoutCopy} }
 
         case CHANGE_WIDGETS:
             layoutCopy = { ...state.map };
-            const newLayout = reorderWidgets(
+            newLayout = reorderWidgets(
                 layoutCopy,
                 action.payload.widgetId, 
                 action.payload.parentId, 
@@ -90,8 +61,8 @@ export const rootReducer = (state=initialLayoutState, action) => {
                 return state
             }
             layoutCopy = { ...state.map };
-            newState = reorderLayout(layoutCopy, dropId, position, dragId)
-            return { ...state, map: {...newState}}
+            newLayout = reorderLayout(layoutCopy, dropId, position, dragId)
+            return { ...state, map: {...newLayout}}
 
         default:
             return state
