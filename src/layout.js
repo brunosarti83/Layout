@@ -3,7 +3,13 @@ import Purple from "./Components/Widgets/Purple/Purple"
 
 export const widgets = {
     "green": Green,
-    "purple": Purple
+    "purple": Purple,
+    "green2": Green,
+    "purple2": Purple,
+    "green3": Green,
+    "purple3": Purple,
+    "green4": Green,
+    "purple4": Purple,
 }
 
 export const dndTypes = {

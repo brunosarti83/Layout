@@ -81,7 +81,7 @@ function WidgetsNav({ isOpen }) {
       <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-4 mb-4">
         drag and drop...
       </div>
-      <ul className={`flex flex-col gap-2 ${!isOpen ? "hidden" : null}`}>
+      <ul className={`flex flex-col gap-2 max-h-[60%] mt-10 overflow-auto scrollbar-none ${!isOpen ? "hidden" : null}`}>
         {Object.keys(widgets).map((widget, index) => (
           <li key={index}>
             <WidgetItem widget={widget} />
