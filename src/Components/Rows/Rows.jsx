@@ -28,18 +28,18 @@ export default function Rows({ nodeA, nodeB }) {
   const startResize = (e) => {
     setDrag({
       active: true,
-      y: e.clientY,
+      y: e.clientY ?? e.touches[0].clientY,
     });
   };
 
   const resizeFrame = (e) => {
     const { active, y } = drag;
+    const clientY = e.clientY ?? e.touches[0].clientY;
     if (active) {
-      const yDiff = Math.abs(y - e.clientY);
-      const newH =
-        y < e.clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 150);
+      const yDiff = Math.abs(y - clientY);
+      const newH = y < clientY ? dims.h + yDiff : Math.max(dims.h - yDiff, 50);
 
-      setDrag({ ...drag, y: e.clientY });
+      setDrag({ ...drag, y: clientY });
       setDims({ h: newH });
     }
   };
@@ -58,6 +58,7 @@ export default function Rows({ nodeA, nodeB }) {
           onMouseMove={resizeFrame}
           onMouseUp={stopResize}
           className="absolute top-0 left-0 right-0 bottom-0 bg-gray-500 opacity-[0.5] z-50"
+          style={{ touchAction: "none", userSelect: "none" }}
         ></div>
       )}
       <div
@@ -68,11 +69,15 @@ export default function Rows({ nodeA, nodeB }) {
       >
         <Unit map={nodeA} />
       </div>
-      <div className="h-1 relative flex-shrink-0">
+      <div className="w-full relative">
         <button
           id="handle"
-          className="w-full h-1 absolute bottom-0 flex-shrink-0 hover:cursor-row-resize"
+          className="max-md:h-[12px] max-md:w-[50px] max-md:rounded-lg bg-gray-200 max-md:drop-shadow-md md:h-1 md:w-full md:bg-transparent hover:cursor-row-resize shrink-0 max-md:absolute max-md:top-[50%] max-md:left-[50%] max-md:translate-x-[-50%] max-md:translate-y-[-70%] z-50"
           onMouseDown={startResize}
+          onTouchStart={startResize}
+          onTouchMove={resizeFrame}
+          onTouchEnd={stopResize}
+          style={{ touchAction: "none", userSelect: "none" }}
         >
           {}
         </button>
@@ -80,7 +85,7 @@ export default function Rows({ nodeA, nodeB }) {
       <div
         id="rowB"
         className="flex gap-0 w-full relative overflow-y-hidden rounded-md"
-        style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 150 }}
+        style={{ height: `calc(100% - ${dims.h}px)`, minHeight: 50 }}
       >
         <Unit map={nodeB} />
       </div>
