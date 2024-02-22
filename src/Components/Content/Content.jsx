@@ -45,7 +45,7 @@ export default function Content({ map }) {
       className={`flex ${map.column && "flex-col"} p-2 w-full h-full relative`}
     >
       <div className="absolute top-2 right-0 m-[2px] z-50">
-        <AddButtons id={map.id} />
+        <AddButtons id={map.id} column={map.column} />
       </div>
       {map.column ? (
         <DropAreaWidgetColumns map={map} position={0} />

@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { deleteNode, getNode, reorderLayout, reorderWidgets, splitTheNode } from "../layout";
-import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WIDGETS, CHANGE_LAYOUT } from "./actions";
+import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WIDGETS, CHANGE_LAYOUT, SWITCH_DIRECTION } from "./actions";
 
 
 const initialLayoutState = {
@@ -64,6 +64,13 @@ export const rootReducer = (state=initialLayoutState, action) => {
             newLayout = reorderLayout(layoutCopy, dropId, position, dragId)
             return { ...state, map: {...newLayout}}
 
+        case SWITCH_DIRECTION:
+            layoutCopy = { ...state.map };
+            const targetNode = getNode(layoutCopy, action.payload.layoutId)    
+            const bool = targetNode.column
+            targetNode.column = !bool
+            return { ...state, map: {...layoutCopy} }
+            
         default:
             return state
     }

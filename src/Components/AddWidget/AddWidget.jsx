@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import { motion } from "framer-motion";
 import { widgets, dndTypes } from "../../layout";
