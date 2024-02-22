@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import { motion } from "framer-motion";
 import { widgets, dndTypes } from "../../layout";
@@ -39,6 +39,7 @@ export default function AddWidget() {
       <OpenList setIsOpen={setIsOpen} />
       <motion.div
         onMouseLeave={() => setIsOpen(false)}
+        onDragLeave={() => setIsOpen(false)}
         className="absolute bg-slate-900/30 rounded-[50px] flex justify-center items-center px-2 pb-20 pt-6 backdrop-filter backdrop-blur-[50px]"
         variants={menu}
         animate={isOpen ? "open" : "closed"}
@@ -49,6 +50,8 @@ export default function AddWidget() {
     </div>
   );
 }
+
+
 
 function OpenList({ setIsOpen }) {
   const [showAdd, setShowAdd] = useState(false);
@@ -75,22 +78,30 @@ function OpenList({ setIsOpen }) {
   );
 }
 
+
+
 function WidgetsNav({ isOpen }) {
   return (
     <div className="w-full h-full text-white font-source">
-      <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-4 mb-4">
+      <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-2 mb-2">
         drag and drop...
       </div>
-      <ul className={`flex flex-col gap-2 max-h-[60%] mt-10 overflow-auto scrollbar-none ${!isOpen ? "hidden" : null}`}>
-        {Object.keys(widgets).map((widget, index) => (
-          <li key={index}>
-            <WidgetItem widget={widget} />
-          </li>
-        ))}
-      </ul>
+      <div 
+        className={`flex flex gap-2 w-full max-h-[60%] mt-10 overflow-auto scrollbar-none relative ${!isOpen ? "hidden" : null}`}
+      >
+        <ul className="flex flex-col w-full">
+          {Object.keys(widgets).map((widget, index) => (
+            <li key={index}>
+              <WidgetItem widget={widget} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
+
+
 
 function WidgetItem({ widget }) {
   const dispatch = useDispatch();

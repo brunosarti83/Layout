@@ -69,11 +69,16 @@ export default function Rows({ nodeA, nodeB }) {
       >
         <Unit map={nodeA} />
       </div>
-      <div className="w-full relative">
+      <div
+        id="gap" 
+        onMouseDown={startResize}
+        onMouseUp={stopResize}
+        className="w-full h-[1px] relative border-t-[1px] hover:cursor-row-resize">
         <button
           id="handle"
-          className="max-md:h-[12px] max-md:w-[50px] max-md:rounded-lg bg-gray-200 max-md:drop-shadow-md md:h-1 md:w-full md:bg-transparent hover:cursor-row-resize shrink-0 max-md:absolute max-md:top-[50%] max-md:left-[50%] max-md:translate-x-[-50%] max-md:translate-y-[-70%] z-50"
+          className="h-[12px] w-[24px] bg-gray-400 rounded-[2px] drop-shadow-md hover:cursor-row-resize shrink-0 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50"
           onMouseDown={startResize}
+          onMouseUp={stopResize}
           onTouchStart={startResize}
           onTouchMove={resizeFrame}
           onTouchEnd={stopResize}

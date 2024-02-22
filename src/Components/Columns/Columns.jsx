@@ -70,11 +70,16 @@ export default function Columns({ nodeA, nodeB }) {
       >
         <Unit map={nodeA} />
       </div>
-      <div id="gap" className="h-full relative">
+      <div id="gap" 
+        onMouseDown={startResize}
+        onMouseUp={stopResize}
+        className="h-full w-[1px] relative border-l-[1px] hover:cursor-col-resize"
+        >
         <button
           id="resizeHandle"
-          className="max-md:w-[12px] max-md:h-[50px] max-md:rounded-md bg-gray-200 max-md:drop-shadow-md md:w-1 md:h-full md:bg-transparent hover:cursor-col-resize shrink-0 max-md:absolute max-md:top-[50%] max-md:left-[50%] max-md:translate-x-[-40%] max-md:translate-y-[-50%] z-50"
+          className="w-[12px] h-[24px] bg-gray-400 rounded-[2px] drop-shadow-md hover:cursor-col-resize shrink-0 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50"
           onMouseDown={startResize}
+          onMouseUp={stopResize}
           onTouchStart={startResize}
           onTouchMove={resizeFrame}
           onTouchEnd={stopResize}
