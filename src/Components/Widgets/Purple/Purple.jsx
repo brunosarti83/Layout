@@ -60,3 +60,5 @@ export default function Purple({ id, parentId, direction, onClose }) {
     </div>
   );
 }
+
+

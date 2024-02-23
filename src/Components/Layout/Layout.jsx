@@ -3,9 +3,7 @@
 // major components
 import Unit from "../Unit/Unit";
 import AddWidget from "../AddWidget/AddWidget";
-// react-dnd
-//import { DndProvider } from "react-dnd";
-//import { HTML5Backend } from "react-dnd-html5-backend";
+// react-dnd Multi
 import { DndProvider, MultiBackend } from "react-dnd-multi-backend";
 import { HTML5toTouch } from "rdndmb-html5-to-touch"; // or any other pipeline
 
