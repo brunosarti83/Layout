@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 
-export const useMousePosition = () => {
+export const useTouchPosition = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const setFromEvent = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      setPosition({ x: e.touches[0].pageX, y: e.touches[0].pageY });
     }
     
-    window.addEventListener("mousemove", setFromEvent);
+    window.addEventListener("touchstart", setFromEvent);
 
     return () => {
-      window.removeEventListener("mousemove", setFromEvent);
+      window.removeEventListener("touchmove", setFromEvent);
     };
   }, []);
 

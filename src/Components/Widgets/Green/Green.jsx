@@ -9,12 +9,12 @@ import { useDrag } from "react-dnd";
 import { changeWidgets } from "../../../redux/actions";
 // minorComponents
 import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
-import iconImg from "../../../assets/layout5.png";
+import DraggingIcon from "../../DraggingIcon/DraggingIcon";
 
 export default function Green({ id, parentId, direction, onClose }) {
   const dispatch = useDispatch();
 
-  const [{ isDragging }, drag, preview] = useDrag(() => ({
+  const [{ isDragging }, drag] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET,

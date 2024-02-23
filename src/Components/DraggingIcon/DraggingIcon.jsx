@@ -1,13 +1,13 @@
-import { useMousePosition } from "../../helpers/useMousePosition";
+import { useTouchPosition } from "../../helpers/useTouchPosition";
 
 export default function DraggingIcon() {
-  const mousePosition = useMousePosition();
+  const touchPosition = useTouchPosition();
   return (
     <div
       className={`absolute w-[70px] h-[70px] bg-slate-700/50 border-[2px] border-white rounded-[10px] translate-x-[-50%] ${
-        mousePosition.x === 0 && "hidden"
+        touchPosition.x === 0 && "hidden"
       }`}
-      style={{ left: mousePosition.x, top: mousePosition.y }}
+      style={{ left: touchPosition.x, top: touchPosition.y }}
     ></div>
   );
 }
