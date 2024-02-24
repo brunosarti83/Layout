@@ -1,5 +1,7 @@
 import { useDragLayer } from "react-dnd";
 import WidgetSkeleton from "../Skeletons/WidgetSkeleton";
+import { dndTypes } from "../../layout";
+import LayoutSkeleton from "../Skeletons/LayoutSkeleton";
 
 const layerStyles = {
   position: "fixed",
@@ -35,6 +37,8 @@ export const CustomDragLayer = (props) => {
     }));
   function renderItem() {
     switch (itemType) {
+      case dndTypes.LAYOUT:
+        return <LayoutSkeleton />;
       default:
         return <WidgetSkeleton />;
     }

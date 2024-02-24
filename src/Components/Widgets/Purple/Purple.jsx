@@ -60,7 +60,7 @@ export default function Purple({ id, parentId, direction, onClose }) {
       <div className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing">
         <ThreeDotsMenu onClose={onClose} />
       </div>
-      {"<WidgetExample />"}
+      {`<WidgetExample /> id:${id}`}
       <div ref={preview}></div>
     </div>
   );

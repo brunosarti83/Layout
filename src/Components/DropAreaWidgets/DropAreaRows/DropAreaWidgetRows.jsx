@@ -5,19 +5,21 @@ import { useDrop } from "react-dnd";
 import { dndTypes } from "../../../layout";
 
 export default function DropAreaWidgetRows({ map, position }) {
-
-  const [{ canDrop, isOver }, drop] = useDrop({
-    // The type (or types) to accept - strings or symbols
-    accept: [dndTypes.WIDGET, dndTypes.WIDGET_BOX],
-    drop: (item, monitor) => {
-     return { dropId: map.id, position }
-    },  
-    // Props to collect
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
+  const [{ canDrop, isOver }, drop] = useDrop(
+    () => ({
+      // The type (or types) to accept - strings or symbols
+      accept: [dndTypes.WIDGET, dndTypes.WIDGET_BOX],
+      drop: (item, monitor) => {
+        return { dropId: map.id, position };
+      },
+      // Props to collect
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      }),
     }),
-  });
+    [map]
+  );
 
   return (
     <div
