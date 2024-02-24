@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
-import { addToLayout, removeFromLayout, changeDirection } from "../../redux/actions";
+import {
+  addToLayout,
+  removeFromLayout,
+  changeDirection,
+} from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { VscSplitHorizontal } from "react-icons/vsc";
 import { VscSplitVertical } from "react-icons/vsc";
 import { VscChromeClose } from "react-icons/vsc";
-import { VscArrowRight } from "react-icons/vsc";
-import { VscArrowDown } from "react-icons/vsc";
+//import { VscArrowRight } from "react-icons/vsc";
+//import { VscArrowDown } from "react-icons/vsc";
+import { LuRotateCw } from "react-icons/lu";
 
 export default function AddButtons({ id, column }) {
   const dispatch = useDispatch();
@@ -27,10 +32,11 @@ export default function AddButtons({ id, column }) {
           onClick={() => dispatch(changeDirection(id))}
           className="bg-sky-500/5 h-full w-[25px] rounded-[5px] text-center align-middle"
         >
-          { column
-            ? <VscArrowRight className="mx-auto text-lg text-gray-500" />
-            : <VscArrowDown className="mx-auto text-lg text-gray-500" />
-          }
+          {column ? (
+            <LuRotateCw className="mx-auto text-md text-gray-500" />
+          ) : (
+            <LuRotateCw className="mx-auto text-md text-gray-500" />
+          )}
         </button>
         <button
           onClick={() => dispatch(addToLayout(id, "row"))}
