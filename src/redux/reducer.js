@@ -1,9 +1,10 @@
 /* eslint-disable no-case-declarations */
 import { deleteNode, getNode, reorderLayout, reorderWidgets, splitTheNode } from "../layout";
-import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WIDGETS, CHANGE_LAYOUT, SWITCH_DIRECTION } from "./actions";
+import { ADD_TO_LAYOUT, REMOVE_FROM_LAYOUT, ADD_WIDGET, REMOVE_WIDGET, CHANGE_WIDGETS, CHANGE_LAYOUT, SWITCH_DIRECTION, SET_DRAGGING } from "./actions";
 
 
 const initialLayoutState = {
+    isDragging: null,
     map: {
         id: String(Math.floor(Math.random()*10000)),
         content: [],
@@ -70,6 +71,9 @@ export const rootReducer = (state=initialLayoutState, action) => {
             const bool = targetNode.column
             targetNode.column = !bool
             return { ...state, map: {...layoutCopy} }
+
+        case SET_DRAGGING:
+            return {...state, isDragging: action.payload}
             
         default:
             return state

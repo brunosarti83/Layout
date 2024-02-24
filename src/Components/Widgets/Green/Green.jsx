@@ -6,15 +6,14 @@ import { dndTypes } from "../../../layout";
 // react-dnd
 import { useDrag } from "react-dnd";
 // actions
-import { changeWidgets } from "../../../redux/actions";
+import { changeWidgets, setDragging } from "../../../redux/actions";
 // minorComponents
 import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
-import DraggingIcon from "../../DraggingIcon/DraggingIcon";
 
 export default function Green({ id, parentId, direction, onClose }) {
   const dispatch = useDispatch();
 
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{ isDragging }, drag, preview] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET,
@@ -45,6 +44,7 @@ export default function Green({ id, parentId, direction, onClose }) {
     height:
       direction === "column" ? "250px" : direction === "row" ? "100%" : "",
   };
+
   return (
     <div
       ref={drag}
@@ -58,6 +58,18 @@ export default function Green({ id, parentId, direction, onClose }) {
         <ThreeDotsMenu onClose={onClose} />
       </div>
       {"<WidgetExample />"}
+      <div ref={preview}></div>
     </div>
   );
 }
+
+export const GreenSkeleton = () => {
+  return (
+    <div className="w-full h-full bg-gradient-to-br from-gray-500/50 to-transparent to-30% rounded-[20px] flex flex-col flex-shrink-0 animate-pulse px-4">
+      <div className="w-full flex justify-start px-4 py-2 opacity-50">
+        <ThreeDotsMenu />
+      </div>
+      <div className="h-10 w-full rounded-lg bg-gradient-to-br from-gray-500/50 to-transparent to-30%"></div>
+    </div>
+  );
+};

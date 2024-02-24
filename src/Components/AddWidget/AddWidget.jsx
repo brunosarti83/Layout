@@ -51,8 +51,6 @@ export default function AddWidget() {
   );
 }
 
-
-
 function OpenList({ setIsOpen }) {
   const [showAdd, setShowAdd] = useState(false);
 
@@ -78,16 +76,16 @@ function OpenList({ setIsOpen }) {
   );
 }
 
-
-
 function WidgetsNav({ isOpen }) {
   return (
     <div className="w-full h-full text-white font-source">
       <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-2 mb-2">
         drag and drop...
       </div>
-      <div 
-        className={`flex flex gap-2 w-full max-h-[60%] mt-10 overflow-auto scrollbar-none relative ${!isOpen ? "hidden" : null}`}
+      <div
+        className={`flex flex gap-2 w-full max-h-[60%] mt-10 overflow-auto scrollbar-none relative ${
+          !isOpen ? "hidden" : null
+        }`}
       >
         <ul className="flex flex-col w-full">
           {Object.keys(widgets).map((widget, index) => (
@@ -101,12 +99,10 @@ function WidgetsNav({ isOpen }) {
   );
 }
 
-
-
 function WidgetItem({ widget }) {
   const dispatch = useDispatch();
 
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{ isDragging }, drag, preview] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET_BOX,
@@ -132,6 +128,7 @@ function WidgetItem({ widget }) {
         {widget[1]}
       </div>
       <div className="text-lg">{widget[0].toUpperCase() + widget.slice(1)}</div>
+      <div ref={preview}></div>
     </div>
   );
 }

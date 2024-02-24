@@ -6,6 +6,7 @@ export const REMOVE_WIDGET = 'REMOVE_WIDGET'
 export const CHANGE_WIDGETS = 'CHANGE_WIDGETS'
 export const CHANGE_LAYOUT = 'CHANGE_LAYOUT'
 export const SWITCH_DIRECTION = "SWITCH_DIRECTION"
+export const SET_DRAGGING = "SET_DRAGGING"
 
 
 export const addToLayout = (getId, columnOrRow) => {
@@ -54,5 +55,12 @@ export const changeDirection = (layoutId) => {
     return {
         type: SWITCH_DIRECTION,
         payload: { layoutId }
+    }
+}
+
+export const setDragging = (dragging) => {
+    return {
+        type: SET_DRAGGING,
+        payload: dragging
     }
 }

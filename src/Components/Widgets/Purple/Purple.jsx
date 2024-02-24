@@ -13,7 +13,7 @@ import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
 export default function Purple({ id, parentId, direction, onClose }) {
   const dispatch = useDispatch();
 
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [{ isDragging }, drag, preview] = useDrag(() => ({
     // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
     // "type" is required. It is used by the "accept" specification of drop targets.
     type: dndTypes.WIDGET,
@@ -57,8 +57,7 @@ export default function Purple({ id, parentId, direction, onClose }) {
         <ThreeDotsMenu onClose={onClose} />
       </div>
       {"<WidgetExample />"}
+      <div ref={preview}></div>
     </div>
   );
 }
-
-
