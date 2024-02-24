@@ -6,37 +6,41 @@ import { dndTypes } from "../../../layout";
 // react-dnd
 import { useDrag } from "react-dnd";
 // actions
-import { changeWidgets, setDragging } from "../../../redux/actions";
+import { changeWidgets } from "../../../redux/actions";
 // minorComponents
 import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
 
 export default function Green({ id, parentId, direction, onClose }) {
   const dispatch = useDispatch();
 
-  const [{ isDragging }, drag, preview] = useDrag(() => ({
-    // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
-    // "type" is required. It is used by the "accept" specification of drop targets.
-    type: dndTypes.WIDGET,
-    item: { widId: id, parentId },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult();
-      if (item && dropResult) {
-        dispatch(
-          changeWidgets(
-            item.widId,
-            item.parentId,
-            dropResult.dropId,
-            dropResult.position
-          )
-        );
-      }
-    },
-    // The collect function utilizes a "monitor" instance
-    // to pull important pieces of state from the DnD system.
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+  const [{ isDragging }, drag, preview] = useDrag(
+    () => ({
+      // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
+      // "type" is required. It is used by the "accept" specification of drop targets.
+      type: dndTypes.WIDGET,
+      item: { widId: id, parentId },
+      end: (item, monitor) => {
+        const dropResult = monitor.getDropResult();
+        if (item && dropResult) {
+          dispatch(
+            changeWidgets(
+              item.widId,
+              item.parentId,
+              dropResult.dropId,
+              dropResult.position
+            )
+          );
+        }
+      },
+      // The collect function utilizes a "monitor" instance
+      // to pull important pieces of state from the DnD system.
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-  }));
+    // this id MUST be in array or it gets memoed
+    [id]
+  );
 
   const styles = {
     width:
@@ -57,19 +61,8 @@ export default function Green({ id, parentId, direction, onClose }) {
       <div className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing">
         <ThreeDotsMenu onClose={onClose} />
       </div>
-      {"<WidgetExample />"}
+      {`<WidgetExample /> id:${id}`}
       <div ref={preview}></div>
     </div>
   );
 }
-
-export const GreenSkeleton = () => {
-  return (
-    <div className="w-full h-full bg-gradient-to-br from-gray-500/50 to-transparent to-30% rounded-[20px] flex flex-col flex-shrink-0 animate-pulse px-4">
-      <div className="w-full flex justify-start px-4 py-2 opacity-50">
-        <ThreeDotsMenu />
-      </div>
-      <div className="h-10 w-full rounded-lg bg-gradient-to-br from-gray-500/50 to-transparent to-30%"></div>
-    </div>
-  );
-};

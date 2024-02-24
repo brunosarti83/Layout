@@ -16,27 +16,31 @@ import DropAreaWidgetRows from "../DropAreaWidgets/DropAreaRows/DropAreaWidgetRo
 export default function Content({ map }) {
   const dispatch = useDispatch();
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
-    // "type" is required. It is used by the "accept" specification of drop targets.
-    type: dndTypes.LAYOUT,
-    item: () => { 
-      return { dragId: map.id }
-    },
-    end(item, monitor) {
-      const dropResult = monitor.getDropResult();
-      if (item && dropResult) {
-        dispatch(
-          changeLayout(dropResult.dropId, dropResult.position, item.dragId)
-        );
-      }
-    },
-    // The collect function utilizes a "monitor" instance
-    // to pull important pieces of state from the DnD system.
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      // drag & dragPreview are Refs: [ ..., drag, dragPreview] = useDrag()
+      // "type" is required. It is used by the "accept" specification of drop targets.
+      type: dndTypes.LAYOUT,
+      item: () => {
+        return { dragId: map.id };
+      },
+      end(item, monitor) {
+        const dropResult = monitor.getDropResult();
+        if (item && dropResult) {
+          dispatch(
+            changeLayout(dropResult.dropId, dropResult.position, item.dragId)
+          );
+        }
+      },
+      // The collect function utilizes a "monitor" instance
+      // to pull important pieces of state from the DnD system.
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-  }),[map]);
+    // this map MUST be in dependency array or it gets memoed
+    [map]
+  );
 
   return (
     <div

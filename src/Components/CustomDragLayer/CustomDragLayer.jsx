@@ -1,5 +1,5 @@
 import { useDragLayer } from "react-dnd";
-import { GreenSkeleton } from "../Widgets/Green/Green";
+import WidgetSkeleton from "../Skeletons/WidgetSkeleton";
 
 const layerStyles = {
   position: "fixed",
@@ -36,7 +36,7 @@ export const CustomDragLayer = (props) => {
   function renderItem() {
     switch (itemType) {
       default:
-        return <GreenSkeleton />;
+        return <WidgetSkeleton />;
     }
   }
   if (!isDragging) {

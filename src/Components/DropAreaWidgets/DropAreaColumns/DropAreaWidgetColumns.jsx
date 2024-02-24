@@ -8,7 +8,9 @@ export default function DropAreaWidgetColumns({ map, position }) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: [dndTypes.WIDGET, dndTypes.WIDGET_BOX],
-    drop: () => ({ dropId: map.id, position }),
+    drop: () => {
+      return { dropId: map.id, position };
+    },
     // Props to collect
     collect: (monitor) => ({
       isOver: monitor.isOver(),
