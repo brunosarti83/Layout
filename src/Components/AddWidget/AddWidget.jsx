@@ -39,7 +39,7 @@ export default function AddWidget() {
       <OpenList setIsOpen={setIsOpen} />
       <motion.div
         onMouseLeave={() => setIsOpen(false)}
-        onDragLeave={() => setIsOpen(false)}
+        onPointerLeave={() => setIsOpen(false)}
         className="absolute bg-slate-900/30 rounded-[50px] flex justify-center items-center px-2 pb-20 pt-6 backdrop-filter backdrop-blur-[50px]"
         variants={menu}
         animate={isOpen ? "open" : "closed"}
@@ -83,7 +83,7 @@ function WidgetsNav({ isOpen }) {
         drag and drop...
       </div>
       <div
-        className={`flex flex gap-2 w-full max-h-[60%] mt-10 overflow-auto scrollbar-none relative ${
+        className={`flex gap-2 w-full max-h-[60%] mt-10 overflow-auto scrollbar-none relative ${
           !isOpen ? "hidden" : null
         }`}
       >
