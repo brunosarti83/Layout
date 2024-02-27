@@ -1,9 +1,11 @@
+import Chart from "./Components/Widgets/Chart/Chart"
 import Green from "./Components/Widgets/Green/Green"
 import Purple from "./Components/Widgets/Purple/Purple"
 
 export const widgets = {
     "green": Green,
     "purple": Purple,
+    "chart": Chart,
 }
 
 export const dndTypes = {
