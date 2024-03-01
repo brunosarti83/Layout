@@ -39,8 +39,8 @@ export default function Chart({ id, parentId, direction, onClose }) {
   );
 
   const styles = {
-    width: "100%",
-    height: "100%",
+    width: "98%",
+    height: "98%",
     maxWidth: direction === "row" ? "400px" : "",
     maxHeight: direction === "column" ? "90dvh" : "",
   };
@@ -57,7 +57,9 @@ export default function Chart({ id, parentId, direction, onClose }) {
       <div className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing">
         <ThreeDotsMenu onClose={onClose} />
       </div>
-      <AdvancedChart />
+      <div className="px-1 h-full w-full">
+        <AdvancedChart />
+      </div>
       <div ref={preview}></div>
     </div>
   );

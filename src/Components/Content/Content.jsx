@@ -46,7 +46,9 @@ export default function Content({ map }) {
     <div
       id="Content"
       ref={drag}
-      className={`flex ${map.column && "flex-col"} p-2 w-full h-full relative`}
+      className={`flex ${
+        map.column && "flex-col"
+      } items-center p-2 w-full h-full relative`}
     >
       <div className="absolute top-2 right-0 m-[2px] z-50">
         <AddButtons id={map.id} column={map.column} />
