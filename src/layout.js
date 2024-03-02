@@ -6,6 +6,11 @@ export const widgets = {
     "green": Green,
     "purple": Purple,
     "chart": Chart,
+    "green2": Green,
+    "purple2": Purple,
+    "green3": Green,
+    "purple3": Purple,
+    
 }
 
 export const dndTypes = {

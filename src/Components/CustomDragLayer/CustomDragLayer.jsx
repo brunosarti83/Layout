@@ -33,7 +33,7 @@ export const CustomDragLayer = (props) => {
       itemType: monitor.getItemType(),
       initialOffset: monitor.getInitialSourceClientOffset(),
       currentOffset: monitor.getSourceClientOffset(),
-      isDragging: monitor.isDragging(),
+      isDragging: !!monitor.isDragging(),
     }));
   function renderItem() {
     switch (itemType) {

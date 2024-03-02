@@ -47,14 +47,16 @@ export default function Chart({ id, parentId, direction, onClose }) {
 
   return (
     <div
-      ref={drag}
       style={{
         ...styles,
         viewTransitionName: "name-" + id,
       }}
       className="bg-gray-50 rounded-[20px] flex flex-col flex-shrink-0"
     >
-      <div className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing">
+      <div
+        ref={drag}
+        className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing"
+      >
         <ThreeDotsMenu onClose={onClose} />
       </div>
       <div className="px-1 h-full w-full">

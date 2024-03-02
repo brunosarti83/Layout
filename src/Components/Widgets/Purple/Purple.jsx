@@ -50,14 +50,16 @@ export default function Purple({ id, parentId, direction, onClose }) {
   };
   return (
     <div
-      ref={drag}
       style={{
         ...styles,
         viewTransitionName: "name-" + id,
       }}
       className="bg-purple-200 rounded-[20px] flex flex-col flex-shrink-0 overflow-hidden"
     >
-      <div className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing">
+      <div
+        ref={drag}
+        className="w-full flex justify-start px-4 py-2 cursor-grab active:cursor-grabbing bg-dot-small-black/30"
+      >
         <ThreeDotsMenu onClose={onClose} />
       </div>
       {`<WidgetExample /> id:${id}`}

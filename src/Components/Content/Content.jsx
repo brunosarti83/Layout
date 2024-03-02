@@ -30,6 +30,8 @@ export default function Content({ map }) {
           dispatch(
             changeLayout(dropResult.dropId, dropResult.position, item.dragId)
           );
+        } else {
+          return null;
         }
       },
       // The collect function utilizes a "monitor" instance
@@ -45,11 +47,16 @@ export default function Content({ map }) {
   return (
     <div
       id="Content"
-      ref={drag}
       className={`flex ${
         map.column && "flex-col"
       } items-center p-2 w-full h-full relative`}
     >
+      <div
+        ref={drag}
+        className={`${
+          map.column ? "w-full h-[25px]" : "h-full w-[25px]"
+        } bg-dot-small-black/40 shrink-0 hover:cursor-grab active:cursor-grabbing`}
+      />
       <div className="absolute top-2 right-0 m-[2px] z-50">
         <AddButtons id={map.id} column={map.column} />
       </div>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { HiOutlineSquaresPlus } from "react-icons/hi2";
 import { motion } from "framer-motion";
 import { widgets, dndTypes } from "../../layout";
@@ -39,7 +39,6 @@ export default function AddWidget() {
       <OpenList setIsOpen={setIsOpen} />
       <motion.div
         onMouseLeave={() => setIsOpen(false)}
-        onPointerLeave={() => setIsOpen(false)}
         className="absolute bg-slate-900/30 rounded-[50px] flex justify-center items-center px-2 pb-20 pt-6 backdrop-filter backdrop-blur-[50px]"
         variants={menu}
         animate={isOpen ? "open" : "closed"}
@@ -77,20 +76,24 @@ function OpenList({ setIsOpen }) {
 }
 
 function WidgetsNav({ isOpen }) {
+  const scrollable = useRef(null);
+
   return (
     <div className="w-full h-full text-white font-source">
       <div className="font-bold border-b-[1px] border-b-white shadow-sm text-center pb-2 mb-2">
         drag and drop...
       </div>
       <div
-        className={`flex gap-2 w-full max-h-[60%] mt-10 overflow-auto scrollbar-none relative ${
-          !isOpen ? "hidden" : null
+        id="scrollable"
+        ref={scrollable}
+        className={`flex w-full max-h-[70%] mt-10 overflow-auto scrollbar-none relative ${
+          !isOpen ? "hidden" : ""
         }`}
       >
         <ul className="flex flex-col w-full">
           {Object.keys(widgets).map((widget, index) => (
             <li key={index}>
-              <WidgetItem widget={widget} />
+              <WidgetItem widget={widget} scrollable={scrollable} />
             </li>
           ))}
         </ul>
@@ -99,7 +102,7 @@ function WidgetsNav({ isOpen }) {
   );
 }
 
-function WidgetItem({ widget }) {
+function WidgetItem({ widget, scrollable }) {
   const dispatch = useDispatch();
 
   const [{ isDragging }, drag, preview] = useDrag(() => ({
@@ -109,7 +112,13 @@ function WidgetItem({ widget }) {
     item: { widget },
     end(item, monitor) {
       const dropResult = monitor.getDropResult();
-      dispatch(addWidget(dropResult.dropId, item.widget, dropResult.position));
+      if (dropResult) {
+        dispatch(
+          addWidget(dropResult.dropId, item.widget, dropResult.position)
+        );
+      } else {
+        return null;
+      }
     },
     // The collect function utilizes a "monitor" instance
     // to pull important pieces of state from the DnD system.
@@ -119,16 +128,29 @@ function WidgetItem({ widget }) {
   }));
 
   return (
-    <div
-      ref={drag}
-      className="w-full h-[50px] flex gap-4 items-center hover:bg-gray-300/50 pl-[30px] cursor-grab"
+    <motion.div
+      initial={{ scale: 0.7, opacity: 0.5 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      viewport={{ root: scrollable }}
+      whileHover={{
+        scale: 1.1,
+      }}
+      className="w-full h-[60px] hover:bg-gray-300/50 pl-[30px]"
     >
-      <div className="w-10 h-10 rounded-[25%] flex justify-center items-center border-[2px] border-white">
-        {widget[0].toUpperCase()}
-        {widget[1]}
+      <div className="w-full h-full flex gap-2 items-center">
+        <div
+          ref={drag}
+          className="h-[80%] my-auto w-[25px] bg-dot-small-white cursor-grab"
+        />
+        <div className="w-10 h-10 rounded-[25%] flex justify-center items-center border-[2px] border-white">
+          {widget[0].toUpperCase()}
+          {widget[1]}
+        </div>
+        <div className="text-lg">
+          {widget[0].toUpperCase() + widget.slice(1)}
+        </div>
       </div>
-      <div className="text-lg">{widget[0].toUpperCase() + widget.slice(1)}</div>
       <div ref={preview}></div>
-    </div>
+    </motion.div>
   );
 }
