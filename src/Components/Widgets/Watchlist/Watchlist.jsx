@@ -9,9 +9,8 @@ import { useDrag } from "react-dnd";
 import { changeWidgets } from "../../../redux/actions";
 // minorComponents
 import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
-import AdvancedChart from "../../TradingViewComponents/AdvChart/AdvChart";
 
-export default function Chart({ id, parentId, direction, onClose }) {
+export default function Watchlist({ id, parentId, direction, onClose }) {
   const dispatch = useDispatch();
 
   const [{ isDragging }, drag, preview] = useDrag(
@@ -60,9 +59,52 @@ export default function Chart({ id, parentId, direction, onClose }) {
         <ThreeDotsMenu onClose={onClose} />
       </div>
       <div className="px-1 h-full w-full">
-        <AdvancedChart symbol="MSFT" />
+        <WatchlistTable
+          symbols={[
+            {
+              name: "ETHUSD",
+              change: "4,15",
+              price: "3.315,25",
+            },
+            {
+              name: "BTCUSD",
+              change: "6,74",
+              price: "67.664,14",
+            },
+            {
+              name: "SOLUSD",
+              change: "3,10",
+              price: "132,87",
+            },
+          ]}
+        />
       </div>
       <div ref={preview}></div>
     </div>
   );
 }
+
+const WatchlistTable = ({ symbols }) => {
+  return (
+    <table className="w-full font-source text-sm">
+      <tr>
+        <th className="px-4 py-2 border-[1px] border-gray-300">Symbol</th>
+        <th className="px-4 py-2 border-[1px] border-gray-300">Chg%</th>
+        <th className="px-4 py-2 border-[1px] border-gray-300">LastPrice</th>
+      </tr>
+      {symbols.map((symbol) => (
+        <tr key={symbol.name}>
+          <td className="px-4 py-2 border-[1px] border-gray-300">
+            {symbol.name}
+          </td>
+          <td className="px-4 py-2 border-[1px] border-gray-300 text-center">
+            {symbol.change} %
+          </td>
+          <td className="px-4 py-2 border-[1px] border-gray-300 flex">
+            $ <span className="ml-auto">{symbol.price}</span>
+          </td>
+        </tr>
+      ))}
+    </table>
+  );
+};

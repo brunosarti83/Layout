@@ -2,29 +2,20 @@
 // TradingViewWidget.jsx
 import { useEffect, useRef, memo } from "react";
 
-const AdvChart = ({ symbol }) => {
+const ScreenerWidget = ({ type }) => {
   const container = useRef();
 
   useEffect(() => {
     const config = {
-      autosize: true,
-      symbol,
-      interval: "D",
-      timezone: "Etc/UTC",
-      theme: "light",
-      style: "1",
+      defaultColumn: "performance",
+      screener_type: type,
+      displayCurrency: "USD",
+      colorTheme: "light",
       locale: "en",
-      enable_publishing: false,
-      withdateranges: true,
-      hide_side_toolbar: false,
-      allow_symbol_change: false,
-      details: false,
-      calendar: false,
-      support_host: "https://www.tradingview.com",
     };
     const script = document.createElement("script");
     script.src =
-      "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+      "https://s3.tradingview.com/external-embedding/embed-widget-screener.js";
     script.type = "text/javascript";
     script.async = true;
     script.innerHTML = JSON.stringify(config);
@@ -33,14 +24,11 @@ const AdvChart = ({ symbol }) => {
 
   return (
     <div
-      className="tradingview-widget-container"
       ref={container}
-      style={{ height: "100%", width: "100%" }}
+      className="tradingview-widget-container"
+      style={{ width: "100%", height: "100%" }}
     >
-      <div
-        className="tradingview-widget-container__widget"
-        style={{ height: "calc(100% - 32px)", width: "100%" }}
-      ></div>
+      <div className="tradingview-widget-container__widget"></div>
       <div className="tradingview-widget-copyright">
         <a
           href="https://www.tradingview.com/"
@@ -54,6 +42,6 @@ const AdvChart = ({ symbol }) => {
   );
 };
 
-const AdvancedChart = memo(AdvChart);
+const Screener = memo(ScreenerWidget);
 
-export default AdvancedChart;
+export default Screener;

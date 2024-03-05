@@ -1,12 +1,13 @@
 import Chart from "./Components/Widgets/Chart/Chart"
 import Green from "./Components/Widgets/Green/Green"
 import Purple from "./Components/Widgets/Purple/Purple"
+import Watchlist from "./Components/Widgets/Watchlist/Watchlist"
 
 export const widgets = {
     "green": Green,
     "purple": Purple,
     "chart": Chart,
-    "green2": Green,
+    "watchlist": Watchlist,
     "purple2": Purple,
     "green3": Green,
     "purple3": Purple,
