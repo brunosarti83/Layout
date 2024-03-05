@@ -87,7 +87,7 @@ export default function Watchlist({ id, parentId, direction, onClose }) {
 const WatchlistTable = ({ symbols }) => {
   return (
     <table className="w-full font-source text-sm">
-      <tr>
+      <tr className="bg-gray-600 text-gray-50">
         <th className="px-4 py-2 border-[1px] border-gray-300">Symbol</th>
         <th className="px-4 py-2 border-[1px] border-gray-300">Chg%</th>
         <th className="px-4 py-2 border-[1px] border-gray-300">LastPrice</th>
