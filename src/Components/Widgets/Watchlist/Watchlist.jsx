@@ -3,12 +3,15 @@
 // hooks & tools
 import { useDispatch } from "react-redux";
 import { dndTypes } from "../../../layout";
+import { useEffect, useRef, useState } from "react";
 // react-dnd
 import { useDrag } from "react-dnd";
 // actions
 import { changeWidgets } from "../../../redux/actions";
 // minorComponents
 import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
+import { BiSolidUpArrow } from "react-icons/bi";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 export default function Watchlist({ id, parentId, direction, onClose }) {
   const dispatch = useDispatch();
@@ -39,7 +42,6 @@ export default function Watchlist({ id, parentId, direction, onClose }) {
 
   const styles = {
     width: "98%",
-    height: "98%",
     maxWidth: direction === "row" ? "400px" : "",
     maxHeight: direction === "column" ? "90dvh" : "",
   };
@@ -60,23 +62,7 @@ export default function Watchlist({ id, parentId, direction, onClose }) {
       </div>
       <div className="px-1 h-full w-full">
         <WatchlistTable
-          symbols={[
-            {
-              name: "ETHUSD",
-              change: "4,15",
-              price: "3.315,25",
-            },
-            {
-              name: "BTCUSD",
-              change: "6,74",
-              price: "67.664,14",
-            },
-            {
-              name: "SOLUSD",
-              change: "3,10",
-              price: "132,87",
-            },
-          ]}
+          symbols={["ETHUSDT", "BTCUSDT", "SOLUSDT"]}
         />
       </div>
       <div ref={preview}></div>
@@ -85,26 +71,58 @@ export default function Watchlist({ id, parentId, direction, onClose }) {
 }
 
 const WatchlistTable = ({ symbols }) => {
+
+  const [tableData, setTableData] = useState({})
+  const ws = useRef(null);
+
+  useEffect(() => {
+    let url = "wss://fstream.binance.com/stream?streams="
+    symbols.forEach((symbol) => {
+      const stream = symbol.toLowerCase() + '@ticker/'
+      url += stream
+    })
+    
+    ws.current = new WebSocket(url.slice(0, -1));
+    const wsCurrent = ws.current;
+
+    ws.current.onmessage = (ev) => {
+      const message = JSON.parse(ev.data)
+      console.log(message)
+      if (symbols.includes(message.data.s)) {
+        setTableData((previous) => ({ ...previous, [message.data.s] : { upTick: Number(message.data.c) > previous[message.data.s]?.price, price: Number(message.data.c), change: Number(message.data.P) }}))
+        console.log(tableData)
+      }
+    }
+
+    return () => {
+        wsCurrent.close();
+    };
+  }, [symbols])
+
   return (
-    <table className="w-full font-source text-sm">
-      <tr className="bg-gray-600 text-gray-50">
-        <th className="px-4 py-2 border-[1px] border-gray-300">Symbol</th>
-        <th className="px-4 py-2 border-[1px] border-gray-300">Chg%</th>
-        <th className="px-4 py-2 border-[1px] border-gray-300">LastPrice</th>
-      </tr>
-      {symbols.map((symbol) => (
-        <tr key={symbol.name}>
-          <td className="px-4 py-2 border-[1px] border-gray-300">
-            {symbol.name}
-          </td>
-          <td className="px-4 py-2 border-[1px] border-gray-300 text-center">
-            {symbol.change} %
-          </td>
-          <td className="px-4 py-2 border-[1px] border-gray-300 flex">
-            $ <span className="ml-auto">{symbol.price}</span>
-          </td>
+    <table className="w-full font-source text-sm mb-8">
+      <thead>
+        <tr className="bg-gray-600 text-gray-50">
+          <th className="px-4 py-2 border-[1px] border-gray-300">Symbol</th>
+          <th className="px-4 py-2 border-[1px] border-gray-300">Chg%</th>
+          <th className="px-4 py-2 border-[1px] border-gray-300">LastPrice</th>
         </tr>
-      ))}
+      </thead>
+      <tbody>
+        {symbols.map((symbol, index) => (
+          <tr key={index}>
+            <td className="px-4 py-2 border-[1px] border-gray-300">
+              {symbol}
+            </td>
+            <td className={`px-4 py-2 border-[1px] border-gray-300 text-center ${tableData[symbol]?.change > 0 ? "text-green-600" : tableData[symbol]?.change < 0 && "text-red-500"}`}>
+               {tableData[symbol]?.change || 0.00}%
+            </td>
+            <td className={`px-4 py-2 border-[1px] border-gray-300 flex ${tableData[symbol]?.upTick ? "text-green-600" : "text-red-500"}`}>
+              $ <span className="ml-auto">{tableData[symbol]?.price || 0.00}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
     </table>
   );
 };
