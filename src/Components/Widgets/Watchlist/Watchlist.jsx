@@ -12,6 +12,7 @@ import { changeWidgets } from "../../../redux/actions";
 import ThreeDotsMenu from "../../ThreeDotsMenu/ThreeDotsMenu";
 import { BiSolidUpArrow } from "react-icons/bi";
 import { BiSolidDownArrow } from "react-icons/bi";
+import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
 
 export default function Watchlist({ id, parentId, direction, onClose }) {
   const dispatch = useDispatch();
@@ -70,8 +71,14 @@ export default function Watchlist({ id, parentId, direction, onClose }) {
   );
 }
 
-const WatchlistTable = ({ symbols }) => {
 
+
+const WatchlistTable = ({ symbols }) => {
+  const [columns, setColumns] = useState([
+    "symbol",
+    "price",
+    "change",
+  ])
   const [tableData, setTableData] = useState({})
   const ws = useRef(null);
 
@@ -100,6 +107,22 @@ const WatchlistTable = ({ symbols }) => {
   }, [symbols])
 
   return (
+    <>
+    <Table aria-label="Example table with dynamic content">
+      <TableHeader>
+        {columns.map((column) =>
+          <TableColumn key={column}>{column}</TableColumn>
+        )}
+      </TableHeader>
+      <TableBody>
+        {symbols.map((symbol) =>
+          <TableRow key={symbol}>
+            {(columnKey) => <TableCell>{tableData[symbol]?.[columnKey]}</TableCell>}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
+
     <table className="w-full font-source text-sm mb-8">
       <thead>
         <tr className="bg-gray-600 text-gray-50">
@@ -124,5 +147,6 @@ const WatchlistTable = ({ symbols }) => {
         ))}
       </tbody>
     </table>
+    </>
   );
 };

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.2.10",
+    "@nextui-org/table": "^2.0.28",
     "@tailwindcss/container-queries": "^0.1.1",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.5",
